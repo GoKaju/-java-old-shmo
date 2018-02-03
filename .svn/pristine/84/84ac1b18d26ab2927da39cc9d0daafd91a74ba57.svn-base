@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="JavaP1PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>formularios.entidades.Formularios</class>
+    <class>formularios.entidades.Ayudas</class>
+    <class>formularios.entidades.Campos</class>
+    <class>formularios.entidades.Categorias</class>
+    <class>formularios.entidades.Opciones</class>
+    <class>formularios.entidades.Anotaciones</class>
+    <class>formularios.entidades.Respuestas</class>
+    <class>formularios.entidades.Pacientes</class>
+    <class>formularios.entidades.Documentos</class>
+    <class>formularios.entidades.Huellafirma</class>
+    <class>ocupacional.JPA.valueobjects.Movimientosfacturacion</class>
+    <class>ocupacional.JPA.valueobjects.Clientes</class>
+    <class>ocupacional.JPA.valueobjects.Centrocostos</class>
+    <class>ocupacional.JPA.valueobjects.TicketClienteservicio</class>
+    <class>ocupacional.JPA.valueobjects.Ticket</class>
+    <class>ocupacional.JPA.valueobjects.Ciudades</class>
+    <class>ocupacional.JPA.valueobjects.Departamentos</class>
+    <class>ocupacional.JPA.valueobjects.Paises</class>
+    <class>ocupacional.JPA.valueobjects.Tipodocumento</class>
+    <class>ocupacional.JPA.valueobjects.ClientesServicio</class>
+    <class>ocupacional.JPA.valueobjects.TipoexamenMedico</class>
+    <class>ocupacional.JPA.valueobjects.Sede</class>
+    <class>ocupacional.JPA.valueobjects.Servicios</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <validation-mode>NONE</validation-mode>
+    <properties>
+      <property name="eclipselink.canonicalmodel.subpackage" value="hc"/>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javaphc?autoReconnect=true"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://javap.sytes.net:3306/javapHC?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="dave"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
+      <!--<property name="javax.persistence.jdbc.password" value=""/>-->
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      <property name="eclipselink.connection-pool.default.initial" value="1" />
+<property name="eclipselink.connection-pool.node2.min" value="16"/>
+<property name="eclipselink.connection-pool.node2.max" value="16"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="JavaP" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ocupacional.JPA.valueobjects.Entidades</class>
+    <class>ocupacional.JPA.valueobjects.Roles</class>
+    <class>ocupacional.JPA.valueobjects.TicketClienteservicio</class>
+    <class>ocupacional.JPA.valueobjects.Naturales</class>
+    <class>ocupacional.JPA.valueobjects.Juridicas</class>
+    <class>ocupacional.JPA.valueobjects.ClientesServicio</class>
+    <class>ocupacional.JPA.valueobjects.Personageneral</class>
+    <class>ocupacional.JPA.valueobjects.Centrocostos</class>
+    <class>ocupacional.JPA.valueobjects.Examenes</class>
+    <class>ocupacional.JPA.valueobjects.Paises</class>
+    <class>ocupacional.JPA.valueobjects.TipoexamenMedico</class>
+    <class>ocupacional.JPA.valueobjects.Tipodocumento</class>
+    <class>ocupacional.JPA.valueobjects.Departamentos</class>
+    <class>ocupacional.JPA.valueobjects.Facturas</class>
+    <class>ocupacional.JPA.valueobjects.Ciudades</class>
+    <class>ocupacional.JPA.valueobjects.Funcionalidades</class>
+    <class>ocupacional.JPA.valueobjects.ProveedoresExamenes</class>
+    <class>ocupacional.JPA.valueobjects.Sexo</class>
+    <class>ocupacional.JPA.valueobjects.Actividadeconomica</class>
+    <class>ocupacional.JPA.valueobjects.Proveedores</class>
+    <class>ocupacional.JPA.valueobjects.Movimientosfacturacion</class>
+    <class>ocupacional.JPA.valueobjects.Itemfactura</class>
+    <class>ocupacional.JPA.valueobjects.Sede</class>
+    <class>ocupacional.JPA.valueobjects.Servicios</class>
+    <class>ocupacional.JPA.valueobjects.Parametrofactura</class>
+    <class>ocupacional.JPA.valueobjects.Usuariorol</class>
+    <class>ocupacional.JPA.valueobjects.Clientes</class>
+    <class>ocupacional.JPA.valueobjects.Ticket</class>
+    <class>ocupacional.JPA.valueobjects.Rolfuncionalidad</class>
+    <class>ocupacional.JPA.valueobjects.ServiciosExamenes</class>
+    <class>ocupacional.JPA.valueobjects.Usuarios</class>
+    <class>ocupacional.JPA.valueobjects.Estadocivil</class>
+    <class>formularios.entidades.ClienteSedes</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.canonicalmodel.subpackage" value="javap"/>
+     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://javap.sytes.net:3306/javap"/>
+       <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javap?autoReconnect=true"/>-->
+      <property name="javax.persistence.jdbc.user" value="dave"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <!--<property name="javax.persistence.jdbc.password" value=""/>-->
+      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
+      <property name="eclipselink.cache.shared.default" value="false"/>
+      
+      <!-- Batch -->
+       <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+      <!-- Batch size -->
+      <property name="eclipselink.jdbc.batch-writing.size" value="100"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="JavaPREMOTO" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <!--<jta-data-source>faca</jta-data-source>-->
+    <class>ocupacional.JPA.valueobjects.Actividadeconomica</class>
+    <class>ocupacional.JPA.valueobjects.Centrocostos</class>
+    <class>ocupacional.JPA.valueobjects.Ciudades</class>
+    <class>ocupacional.JPA.valueobjects.Clientes</class>
+    <class>ocupacional.JPA.valueobjects.ClientesServicio</class>
+    <class>ocupacional.JPA.valueobjects.Departamentos</class>
+    <class>ocupacional.JPA.valueobjects.Empleadoexamen</class>
+    <class>ocupacional.JPA.valueobjects.Empleados</class>
+    <class>ocupacional.JPA.valueobjects.Entidades</class>
+    <class>ocupacional.JPA.valueobjects.Estadocivil</class>
+    <class>ocupacional.JPA.valueobjects.Examenes</class>
+    <class>ocupacional.JPA.valueobjects.Facturas</class>
+    <class>ocupacional.JPA.valueobjects.Funcionalidades</class>
+    <class>ocupacional.JPA.valueobjects.Itemfactura</class>
+    <class>ocupacional.JPA.valueobjects.Juridicas</class>
+    <class>ocupacional.JPA.valueobjects.Movimientosfacturacion</class>
+    <class>ocupacional.JPA.valueobjects.Naturales</class>
+    <class>ocupacional.JPA.valueobjects.Paises</class>
+    <class>ocupacional.JPA.valueobjects.Parametrofactura</class>
+    <class>ocupacional.JPA.valueobjects.Personageneral</class>
+    <class>ocupacional.JPA.valueobjects.Proveedores</class>
+    <class>ocupacional.JPA.valueobjects.ProveedoresExamenes</class>
+    <class>ocupacional.JPA.valueobjects.Roles</class>
+    <class>ocupacional.JPA.valueobjects.Rolfuncionalidad</class>
+    <class>ocupacional.JPA.valueobjects.Sede</class>
+    <class>ocupacional.JPA.valueobjects.Servicios</class>
+    <class>ocupacional.JPA.valueobjects.ServiciosExamenes</class>
+    <class>ocupacional.JPA.valueobjects.Sexo</class>
+    <class>ocupacional.JPA.valueobjects.SincroTicket</class>
+    <class>ocupacional.JPA.valueobjects.Ticket</class>
+    <class>ocupacional.JPA.valueobjects.TicketClienteservicio</class>
+    <class>ocupacional.JPA.valueobjects.Tipodocumento</class>
+    <class>ocupacional.JPA.valueobjects.TipoexamenMedico</class>
+    <class>ocupacional.JPA.valueobjects.Usuariorol</class>
+    <class>ocupacional.JPA.valueobjects.Usuarios</class>
+    <class>formularios.entidades.ClienteSedes</class>
+    <validation-mode>NONE</validation-mode>
+    <properties>
+      <property name="eclipselink.canonicalmodel.subpackage" value="javapr"/>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javap"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://javap.sytes.net:3306/javap?autoReconnect=true"/>
+      <property name="javax.persistence.jdbc.user" value="dave"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <!--<property name="javax.persistence.jdbc.password" value="omaetnerak100"/>-->
+      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
+      <property name="eclipselink.connection-pool.default.initial" value="1" />
+<property name="eclipselink.connection-pool.node2.min" value="16"/>
+<property name="eclipselink.connection-pool.node2.max" value="16"/>4
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="JavaP1PUREMOTO" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>formularios.entidades.Anotaciones</class>
+    <class>formularios.entidades.Ayudas</class>
+    <class>formularios.entidades.Campos</class>
+    <class>formularios.entidades.Categorias</class>
+    <class>formularios.entidades.Documentos</class>
+    <class>formularios.entidades.Formularios</class>
+    <class>formularios.entidades.Huellafirma</class>
+    <class>formularios.entidades.Opciones</class>
+    <class>formularios.entidades.Pacientes</class>
+    <class>formularios.entidades.Respuestas</class>
+    <class>formularios.entidades.SincroPacientes</class>
+    <validation-mode>NONE</validation-mode>
+    <properties>
+      <property name="eclipselink.canonicalmodel.subpackage" value="hcr"/>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javaphc"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://javap.sytes.net:3306/javaphc?autoReconnect=true"/>
+      <property name="javax.persistence.jdbc.user" value="dave"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <!--<property name="javax.persistence.jdbc.password" value="omaetnerak100"/>-->
+      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
+    </properties>
+  </persistence-unit>
+</persistence>

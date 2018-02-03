@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura javap" language="groovy" pageWidth="612" pageHeight="792" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="103723e6-ef16-45dc-9006-346a44cf13c0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="629"/>
+	<import value="javax.imageio.ImageIO"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#00008B">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="SERVICIOS" uuid="877260e5-ab35-48fd-9d14-d76c4c3296e8">
+		<parameter name="TICK_IDDATASET" class="java.lang.String"/>
+		<parameter name="PAFA_IVA" class="java.lang.Number">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="FACT_TOTAL" class="java.lang.Number">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="PAFA_DESC" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT distinct 
+count(s.serv_id) numero,
+s.serv_nombre,
+cs.clse_valor,
+count(s.serv_id) *cs.clse_valor total
+from 
+javap.ticket t ,
+javap.ticket_clienteservicio tcs,
+javap.clientes_servicio cs,
+javap.servicios s
+WHERE 
+t.fact_id=$P{TICK_IDDATASET}
+and cs.clse_id=tcs.clse_id
+and t.tick_id=tcs.tick_id
+and s.serv_id=cs.serv_id
+GROUP BY s.serv_id;]]>
+		</queryString>
+		<field name="numero" class="java.lang.Long"/>
+		<field name="serv_nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="clse_valor" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="total" class="java.lang.Long"/>
+		<variable name="SUB_TOTAL" class="java.lang.Double">
+			<variableExpression><![CDATA[(($P{FACT_TOTAL}.intValue())-$V{IVA}.intValue())]]></variableExpression>
+		</variable>
+		<variable name="IVA" class="java.lang.Number">
+			<variableExpression><![CDATA[($P{FACT_TOTAL}.intValue()*$P{PAFA_IVA}.intValue())/100]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="LAB" uuid="9c230d87-b2f0-433b-8101-a39d3954bd8a">
+		<parameter name="TICK_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT ex.exam_tipo, ex.exam_descripcion, r.resp_descripcion FROM 
+javap.ticket t inner join javap.ticket_clienteservicio tcs on tcs.tick_id = t.tick_id
+inner join javap.clientes_servicio cs on cs.clse_id = tcs.clse_id
+inner join javap.servicios_examenes se on se.serv_id = cs.serv_id
+inner join javap.examenes ex on ex.exam_id = se.exam_id and (ex.exam_tipo ='LABORATORIO' || ex.exam_tipo ='PARACLINICO')
+inner join javaphc.formularios form on form.exam_id = ex.exam_id
+inner join javaphc.anotaciones anot on anot.form_id = form.form_id 
+and tcs.tics_id = anot.tics_id
+inner join javaphc.respuestas  r on r.anot_id = anot.anot_id
+left join javaphc.campos  cam on r.camp_id = cam.camp_id and cam.camp_tipoAux = 'CONCEPTO' 
+WHERE
+t.tick_id =$P{TICK_ID}
+ and cam.camp_tipoAux = 'CONCEPTO']]>
+		</queryString>
+		<field name="exam_tipo" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="exam_descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="resp_descripcion" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\D4V3\\OneDrive\\PROYECTOS\\d3-timeline\\JavaP1\\web\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ANOT_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMG_DIR" class="java.lang.String"/>
+	<parameter name="TIPO_EXAMEN_MEDICO" class="java.lang.String"/>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="EMPRESA" class="java.lang.String"/>
+	<parameter name="PACIENTE" class="java.lang.String"/>
+	<parameter name="DOCUMENTO" class="java.lang.String"/>
+	<parameter name="EDAD" class="java.lang.String"/>
+	<parameter name="DOMINANCIA" class="java.lang.String"/>
+	<parameter name="EPS" class="java.lang.String"/>
+	<parameter name="ESTADO_CIVIL" class="java.lang.String"/>
+	<parameter name="CONCEPTO_MEDICO" class="java.lang.String"/>
+	<parameter name="TICK_ID" class="java.lang.String"/>
+	<parameter name="FIRMA_EMPLEADO" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="FIRMA_PACIENTE" class="java.lang.String"/>
+	<parameter name="HUELLA_PACIENTE" class="java.lang.String"/>
+	<parameter name="CARGO" class="java.lang.String"/>
+	<parameter name="REC_MED" class="java.lang.String"/>
+	<parameter name="REC_OCU" class="java.lang.String"/>
+	<parameter name="REC_SVE" class="java.lang.String"/>
+	<parameter name="RECOMENDACIONES" class="java.lang.String"/>
+	<parameter name="RESTRICCIONES" class="java.lang.String"/>
+	<parameter name="CMO_SOSPECHAEL" class="java.lang.String"/>
+	<parameter name="CMO_RECOMENDACIONESEGRESO" class="java.lang.String"/>
+	<parameter name="FOTO_PACIENTE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 1]]>
+	</queryString>
+	<field name="1" class="java.lang.Long"/>
+	<variable name="FIRMA_MEDICO_BITES" class="java.io.ByteArrayInputStream">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="150">
+			<rectangle radius="5">
+				<reportElement x="0" y="53" width="555" height="97" uuid="65f86f98-7027-4136-b722-55fbca7528c4"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="53" width="554" height="18" backcolor="#F0F0F0" uuid="20303256-d7d2-4441-830a-a7e7f1bbe4fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO MEDICO OCUPACIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="71" width="54" height="15" uuid="db1f11ae-2e15-4078-a188-0bd9e04e4bbd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="71" width="139" height="15" uuid="5cb3d110-1bc6-46b0-b41a-b8d04345409c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TIPO_EXAMEN_MEDICO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="193" y="71" width="56" height="15" uuid="2d4e14db-056f-413e-a8c7-a5d6c0c82ab4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="249" y="71" width="183" height="15" uuid="164538d3-af6c-4484-9b95-2121d24ad5af"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="86" width="54" height="15" uuid="1d648384-dcde-4ad5-b0dc-e405ecaa08c9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPRESA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="86" width="376" height="15" uuid="9536f817-d84a-4f1a-b7e1-38f0fafc6722"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="102" width="54" height="15" uuid="12683bca-7474-414d-b9c3-01d55798a487"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="102" width="376" height="15" uuid="d9e5d4af-3a6f-459b-b359-0e8c84fcfa7e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PACIENTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="117" width="54" height="15" uuid="ea7b2c81-213c-4332-9d16-6b65165e6b51"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.C.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="117" width="88" height="15" uuid="9f3c2173-f470-4029-a7f2-c600cdc31b63"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="117" width="246" height="15" uuid="1d7cf853-1275-4fca-936f-49b331591266"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{EDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="117" width="42" height="15" uuid="8b7ce5a4-0a1f-4e9c-99e3-b05864d7d636"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EDAD:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="224" y="132" width="64" height="15" uuid="c576197e-16c1-4c6f-b375-eb744eef7c6c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{DOMINANCIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="132" width="79" height="15" uuid="591a6ef1-ab1f-4900-82a9-7ee764c33a0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOMINANCIA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="330" y="132" width="102" height="15" uuid="3eb58b85-de0b-4d8d-a10f-bce5d9dbe9b9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{EPS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="288" y="132" width="42" height="15" uuid="a92a5367-2d0d-4363-b110-4d53520adf82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EPS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="132" width="88" height="15" uuid="ebb1bdf4-7c44-483f-8f79-c46ac5fbcc96"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{ESTADO_CIVIL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="132" width="54" height="15" uuid="6d8e357b-6e45-4661-8a5a-e64883248525"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[E. CIVIL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="0" width="288" height="21" forecolor="#003399" uuid="4477504d-0ba8-4b47-9709-090eee68b12c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[JAVAP SALUD OCUPACIONAL SAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="21" width="207" height="16" forecolor="#003399" uuid="de3d0660-c475-4861-b84e-25565d275d57"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Médicos Especialistas en Salud Ocupacional ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="37" width="96" height="16" forecolor="#003399" uuid="f392ca88-450c-487b-8e5d-40f02c03e05d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[NIT. 900345460-0]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="2" y="0" width="79" height="53" uuid="ab8c93ea-c054-4fd3-aa19-caa958e2bf31"/>
+				<imageExpression><![CDATA[$P{IMG_DIR}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="432" y="71" width="122" height="75" backcolor="#33FF33" uuid="b52a22c4-b5d2-4915-8a4d-fc8dedbb2efa"/>
+				<imageExpression><![CDATA[$P{FOTO_PACIENTE}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="440">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="554" height="18" backcolor="#F0F0F0" uuid="adc3ed22-8357-4373-aa8b-7e4fcf5e63ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CONCEPTO MEDICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="20" width="348" height="15" uuid="5f6c42e8-6d2a-4ff8-928c-824908c30521"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Se realizo examen medico ocupacional para desempeñar el cargo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="349" y="20" width="205" height="30" uuid="7d3d0e99-7730-49b4-8e9b-1ea7f4b021f6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{CARGO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="35" width="313" height="15" uuid="d0034e38-bc2e-43ce-9bc0-03a49a9440ad"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Encontrando que el señor(a) en mención:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="50" width="555" height="34" uuid="deec8287-f80c-4e26-93cb-86bdf00ec7c2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{CONCEPTO_MEDICO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="85" width="554" height="18" backcolor="#F0F0F0" uuid="2dd13e4f-ef20-4507-85db-4d4346257a6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EXAMENES PARACLINICOS PRACTICADOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="1" y="154" width="554" height="18" backcolor="#F0F0F0" uuid="7e72b39a-0a54-4c43-94d1-33424e95e9e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[RECOMENDACIONES DE SALUD OCUPACIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="172" width="94" height="42" uuid="04aa0c62-8726-4ffb-92d1-87d633a67703"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEDICAS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="95" y="173" width="460" height="41" uuid="669310c4-2bce-4da7-9ba6-a776d2554356"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{REC_MED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="214" width="95" height="42" uuid="82494945-8f71-4f4e-8a11-4c74df211a15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OCUPACIONALES:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="95" y="215" width="460" height="41" uuid="7d90ab04-3755-4034-9eb6-fcaa5a2a805c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{REC_OCU}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="96" y="257" width="460" height="41" uuid="50c63b08-8043-413f-a092-638e342b63a3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{REC_SVE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="256" width="95" height="42" uuid="7c922c4a-939f-4686-8131-e49007732c80"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INGRESO A S.V. EPIDEMIOLOGICO]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="1" y="298" width="555" height="1" uuid="e1275ab3-5083-4701-844c-e38bec6397b7"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="299" width="120" height="37" uuid="bb240f64-c923-4148-a916-0491b07137a6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECOMENDACIONES:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="121" y="298" width="433" height="38" uuid="67e7225f-9d9d-4b11-8965-0a9aafcb1bcf"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{RECOMENDACIONES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="121" y="336" width="433" height="38" uuid="3bea7f90-ad5f-4ed8-87ca-1f0e2eb0d988"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{RESTRICCIONES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="2" y="337" width="120" height="37" uuid="9cd82c72-69ad-43cd-8b5b-26bd132f43b5"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESTRICCIONES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="2" y="374" width="554" height="18" backcolor="#F0F0F0" uuid="ae6ec39f-7436-41a5-8388-7f8b51fba759">
+					<printWhenExpression><![CDATA[$P{TIPO_EXAMEN_MEDICO}.equals( "EGRESO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EXAMEN DE EGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="392" width="259" height="15" uuid="e9e9d1a3-9437-4c99-97c8-248fa90d9407"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOSPECHA DE ENFERMEDAD LABORAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="262" y="392" width="294" height="15" uuid="3ef203b9-f750-4790-a95b-0f74568c70de"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{CMO_SOSPECHAEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="122" y="407" width="434" height="32" uuid="a9c6e66d-77e8-4f56-9818-8c551e1b6d6a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{CMO_RECOMENDACIONESEGRESO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="407" width="119" height="32" uuid="486e35be-01e8-47b6-88a4-9b413b4fa7ab"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECOMENDACIONES:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="0a5ed1f6-7075-4b92-95a5-4d5a0382646f"/>
+			</line>
+			<componentElement>
+				<reportElement key="table 5" style="table 5" x="0" y="103" width="554" height="51" uuid="3eac2dee-24f1-4788-8841-a5ad6d270021"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="LAB" uuid="9207728f-5cd8-45e5-ad12-d7ea501fd804">
+						<datasetParameter name="TICK_ID">
+							<datasetParameterExpression><![CDATA[$P{TICK_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="103" uuid="4771911b-492c-49cf-abde-483a889d9b13">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="30" uuid="07b80314-4e32-40ad-9be6-9d1d86182291"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[TIPO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 5_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="103" height="20" uuid="80fa40a0-c3b0-4ca6-8855-ca7be1ce0b1a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{exam_tipo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="214" uuid="9112702c-fef1-4364-8590-e82774faeb28">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="214" height="30" uuid="13392e64-e488-4af0-9050-e0acb8259f81"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[NOMBRE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 5_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="214" height="20" uuid="4da6e3b0-5b38-4a0a-a861-d9fee930bd5b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{exam_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="236" uuid="6138a20d-3095-4dc5-92fe-3d215787b8a8">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="236" height="30" uuid="b1a67f74-feb4-4215-91e3-c4d32f942259"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[RESULTADO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 5_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="236" height="20" uuid="0da8f115-9341-4f25-85ec-15b5962ce96a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{resp_descripcion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="150">
+			<staticText>
+				<reportElement x="3" y="0" width="553" height="55" uuid="3afc8c39-bbe1-4d0f-94f6-ed050978eece"/>
+				<textElement verticalAlignment="Top">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Para la expedición del presente documento, se tuvo en cuenta la confidencialidad de la historia clínica y el manejo de esta, de acuerdo con la resolución 2346 de 11  de julio de 2007 y su modificación con la resolución 1918 de 5 junio 2009.   
+CONSENTIMIENTO INFORMADO: Autorizo al doctor(a) a realizar el examen médico y paraclínicos ocupacionales registrados en este documento, se me ha explicado la naturaleza y propósito del presente examen médico y paraclínicos. He comprendido y entendido el propósito, los beneficios, la interpretación, las limitaciones y riesgos de un examen médico y paraclínicos. Entiendo que la realización de estas pruebas es voluntaria y manifiesto que tuve la oportunidad de retirar mi consentimiento en cualquier momento. Fui informado de la confidencialidad de los datos y resultados registrados en el presente examen, y que las respuestas dadas por mí son verídicas. Finalmente manifiesto que he leído y comprendido perfectamente lo anterior, y me encuentro en la capacidad de expresar mi consentimiento.
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="8" y="130" width="173" height="1" uuid="eb903a5b-81a8-41ec-b2d8-12126fafd378"/>
+			</line>
+			<line>
+				<reportElement x="218" y="129" width="173" height="1" uuid="be51fad5-8f4a-428f-ab41-e83b7530f189"/>
+			</line>
+			<line>
+				<reportElement x="414" y="128" width="125" height="1" uuid="cbfdfaca-eab3-4b82-97c9-aa9e39d8efd0"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="132" width="161" height="15" uuid="a401ab9b-1f60-406a-ab04-c0b44d9c07cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA MEDICO S.O. RM  Y LICENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="131" width="161" height="15" uuid="197244d7-3846-483c-bc5e-3f08aa17abe6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA PACIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="131" width="125" height="15" uuid="08fe1867-43b9-436c-b7ec-0017fcfdf00b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HUELLA PACIENTE]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="3" y="55" width="192" height="75" backcolor="#33FF33" uuid="d6bbbb3b-30c3-40b5-83f6-5c4252fd8b94"/>
+				<imageExpression><![CDATA[$P{FIRMA_EMPLEADO}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="193" y="55" width="192" height="74" backcolor="#33FF33" uuid="bbecb9f5-e628-49e1-8b69-3a609453806a"/>
+				<imageExpression><![CDATA[$P{FIRMA_PACIENTE}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="391" y="55" width="165" height="73" backcolor="#33FF33" uuid="0b4b2e88-4ba9-48f0-b43a-21ceaf12861a"/>
+				<imageExpression><![CDATA[$P{HUELLA_PACIENTE}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="55">
+			<textField>
+				<reportElement mode="Opaque" x="2" y="47" width="515" height="8" backcolor="#E6E6E6" uuid="61bf33a8-e2f8-42fd-9893-62f8d77777bf"/>
+				<textElement textAlignment="Right">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="516" y="47" width="40" height="8" backcolor="#E6E6E6" uuid="9c43af9b-dc43-4233-a5ab-1884a9eda58c"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="47" width="43" height="8" uuid="6d71a21b-c0ea-4968-8c42-2bde6c1cb4b3"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[Impreso:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="44" y="47" width="162" height="8" uuid="8fb7f76a-2777-41f3-ac34-c4d3c5ee2962"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="0" width="555" height="47" forecolor="#003399" uuid="4546bac4-4854-48f4-b08a-c4065a010a78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cra 6 No. 14-17 MADRID Teléfono: 8253397 - 8248247 3102138108 - 3133901967 - 3132927564
+Centro comercial Centro Faca Cra 3A No. 6-58 Teléfono: 8429507
+"EL ARTE DE TRABAJAR SIN ENFERMAR"]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

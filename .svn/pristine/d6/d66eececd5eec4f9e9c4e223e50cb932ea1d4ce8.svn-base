@@ -1,0 +1,390 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ocupacional.servlets.facturacion;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import ocupacional.JPA.controlers.CentrocostosJpaController;
+import ocupacional.JPA.controlers.ClientesJpaController;
+import ocupacional.JPA.controlers.FacturasJpaController;
+import ocupacional.JPA.controlers.ItemfacturaJpaController;
+import ocupacional.JPA.controlers.MovimientosfacturacionJpaController;
+import ocupacional.JPA.controlers.SedeJpaController;
+import ocupacional.JPA.controlers.TicketJpaController;
+import ocupacional.JPA.valueobjects.Centrocostos;
+import ocupacional.JPA.valueobjects.Facturas;
+import ocupacional.JPA.valueobjects.Itemfactura;
+import ocupacional.JPA.valueobjects.Movimientosfacturacion;
+import ocupacional.JPA.valueobjects.Ticket;
+import ocupacional.JPA.valueobjects.TicketClienteservicio;
+import ocupacional.servlets.Servlet_ctr_entidades;
+import ocupacional.utils.GenerarReporte;
+import ocupacional.valueobjects.facturacion.FechasCuentasCliente;
+import valeria.metodos.ManejadorFechas;
+import valeria.response.Mediador;
+import valeria.response.ObjetoRespuestaVO;
+import valeria.response.RespuestaXML;
+
+/**
+ *
+ * @author D4V3
+ */
+@WebServlet(name = "Servlet_ctr_Cuentas", urlPatterns = {"/Cuentas"})
+public class Servlet_ctr_Cuentas extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, Exception {
+        response.setContentType("text/xml;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Mediador e = (Mediador) session.getAttribute("Mediador");
+        ManejadorFechas fechas = new ManejadorFechas();
+        String x = null;
+        if (e != null) {
+            e.LimpiarErrores();
+            e.o.setRequest(request);
+            String action = e.o.getvariable("action");
+            x = action;
+            System.out.println(" -->" + action);
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
+            if (action.equals("cuentaVer")) {
+
+                String id = e.o.getvariable("id");
+                if (!id.equals("")) {
+
+                    session.removeAttribute("ClienteVO");
+                    session.setAttribute("ClienteVO", new ClientesJpaController(emf).findClientes(Integer.parseInt(id)));
+
+                    e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("mensajeOK('Cargado Correctamente','reloadTabla','../panels/formularios/factura/cuentasClienteVer.jsp');");
+
+                }
+            } else if (action.equals("cuentaCambiarInicio")) {
+                FechasCuentasCliente fcu =(FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
+                fcu.setFechaInicio(fechas.StringToTimeStamp(e.o.getvariable("fecha")));
+                session.setAttribute("fechasCuentasClienteFacturacion", fcu);
+                
+                    e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("mensajeOK('Cargado Correctamente','reloadTabla','../panels/formularios/factura/cuentasCliente.jsp');");
+                
+            } else if (action.equals("cuentaCambiarFin")) {
+                FechasCuentasCliente fcu =(FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
+                fcu.setFechaFin(fechas.StringToTimeStampHora(e.o.getvariable("fecha")+" 23:59:59"));
+                session.setAttribute("fechasCuentasClienteFacturacion", fcu);
+                
+                    e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("mensajeOK('Cargado Correctamente','reloadTabla','../panels/formularios/factura/cuentasCliente.jsp');");
+                
+                
+                
+            }else if (action.equals("cuentaCambiarSede")) {
+                FechasCuentasCliente fcu =(FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
+                fcu.setSede(new SedeJpaController(emf).findSede(Integer.parseInt(e.o.getvariable("sede"))));
+                session.setAttribute("fechasCuentasClienteFacturacion", fcu);
+                
+                    e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("mensajeOK('Cargado Correctamente','reloadTabla','../panels/formularios/factura/cuentasCliente.jsp');");
+                
+                
+                
+            } else if (action.equals("GenerarFac")) {
+                String cc_id = request.getParameter("cc");
+                Centrocostos cc = new CentrocostosJpaController(emf).findCentrocostos(Integer.parseInt(cc_id));
+                
+                MovimientosfacturacionJpaController movDao = new MovimientosfacturacionJpaController(emf);
+                
+                Movimientosfacturacion mov = new Movimientosfacturacion();
+                
+                mov.setMofaEstado("ACTIVO");
+                mov.setMofaFechacambio(fechas.getFechaHoraTimeStamp());
+                mov.setMofaFechacreacion(fechas.getFechaHoraTimeStamp());
+                mov.setMofaObservacion("-");
+                mov.setMofaRegistradopor(e.getUsuarioVO().getIdUsuario());
+                movDao.create(mov);
+                List<itfaId> listaItem = new ArrayList<itfaId>();
+
+                int totalcc = 0;
+
+                
+                    FechasCuentasCliente fcu = (FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
+
+//        tiped query
+          EntityManager em = emf.createEntityManager();
+                    TypedQuery<Ticket> contickProcesados = em.createNamedQuery("Ticket.findByFechasYsede", Ticket.class);
+                    contickProcesados.setParameter("sede",cc);
+                    contickProcesados.setParameter("inicio", fcu.getFechaInicio());
+                    contickProcesados.setParameter("fin", fcu.getFechaFin());
+                    List<Ticket> lista = contickProcesados.getResultList();
+                   
+                    for (Ticket t : lista) {
+                 
+                    
+                    
+                    
+                    if (t.getTickEstado().equals("PROCESADO")) {
+                        
+                        t.setTickEstado("FACTURADO");
+                        t.setMofoId(mov);
+                        t.setTickRegistradopor(Integer.parseInt(e.getUsuarioVO().getIdUsuario()));
+                        t.setTickFechacambio(fechas.getFechaHoraTimeStamp());
+                        new TicketJpaController(emf).edit(t);
+//                        lista.add(t);
+                        if (t.getTicketClienteservicioList() != null) {
+                            for (TicketClienteservicio tcs : t.getTicketClienteservicioList()) {
+                                if (!listaItem.isEmpty()) {
+                                    boolean b = false;
+                                    for (itfaId l1 : listaItem) {
+
+                                        if (l1.getId() == tcs.getClseId().getClseId()) {
+                                            listaItem.remove(l1);
+                                            l1.getI().setItfaCantidad(l1.getI().getItfaCantidad() + 1);
+                                            listaItem.add(l1);
+                                            b = !b;
+                                            break;
+                                        }
+                                    }
+                                    if (!b) {
+                                        Itemfactura item = new Itemfactura();
+
+                                        item.setIdfaNombre(tcs.getClseId().getServId().getServNombre());
+                                        item.setIdfaValor(tcs.getClseId().getClseValor());
+                                        item.setItfaCantidad(1);
+
+                                        listaItem.add(new itfaId(item, tcs.getClseId().getClseId()));
+
+                                    }
+                                } else {
+                                    Itemfactura item = new Itemfactura();
+
+                                    item.setIdfaNombre(tcs.getClseId().getServId().getServNombre());
+                                    item.setIdfaValor(tcs.getClseId().getClseValor());
+                                    item.setItfaCantidad(1);
+                                    listaItem.add(new itfaId(item, tcs.getClseId().getClseId()));
+
+                                }
+                                System.out.println("listaif:::: " + listaItem.size());
+
+                                totalcc += tcs.getClseId().getClseValor();
+                            }
+                        }
+                    }
+
+                }
+                int t = 0;
+                ItemfacturaJpaController idao = new ItemfacturaJpaController(emf);
+
+                while (listaItem.size() > 0) {
+                    int totalfactura = 0;
+                    Facturas fac = new Facturas();
+                    fac.setCecoId(cc);
+                    fac.setMofaId(mov);
+                    fac.setFactEstado("ACTIVA");
+                    fac.setFactFechacambio(fechas.getFechaHoraTimeStamp());
+                    fac.setFactfechaCreacion(fac.getFactFechacambio());
+                    fac.setFactRegistradopor(e.getUsuarioVO().getIdUsuario());
+                    new FacturasJpaController(emf).create(fac);
+
+                    Iterator<itfaId> it = listaItem.iterator();
+                    int cont = 0;
+                    while (it.hasNext() && cont < 19) {
+                        cont++;
+                        itfaId l1 = it.next();
+                        l1.getI().setFactId(fac);
+                        idao.create(l1.getI());
+                        totalfactura += l1.getI().getIdfaValor() * l1.getI().getItfaCantidad();
+                        t += l1.getI().getIdfaValor() * l1.getI().getItfaCantidad();
+                        it.remove();
+                    }
+                    fac = new FacturasJpaController(emf).findFacturas(fac.getFactId());
+                    fac.setFactTotal(totalfactura);
+                    new FacturasJpaController(emf).edit(fac);
+                }
+
+                session.removeAttribute("ClienteVO");
+                session.setAttribute("ClienteVO", cc.getClieId());
+                if (t == totalcc) {
+                    e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("mensajeOK('Sede facturada Correctamente','reloadTabla','../panels/formularios/factura/cuentasCliente_facturar.jsp');");
+                } else {
+                    e.getObjetoRespuestaVO().setTipooperacion("error");
+                    e.getObjetoRespuestaVO().setRespuesta("0");
+                    e.getObjetoRespuestaVO().setHtml("la sede  no fue facturado Correctamente");
+
+                }
+
+//                HashMap map = new HashMap();
+//                map.put("FACT_ID", fac.getFactId().toString());
+//                map.put("IMG_DIR", request.getSession(true).getServletContext().getRealPath("images/photo.png"));
+//                System.out.println(request.getSession(true).getServletContext().getRealPath("images/photo.png"));
+//                System.out.println("fact id " + map.get("FACT_ID"));
+//
+//                GenerarReporte rep = new GenerarReporte(request, response, "reportes/report1.jasper", map);
+//                rep.devuelveReporte();
+            } else if (action.equals("GenerarFacVer")) {
+                String fac = e.o.getvariable("fac_ocu");
+                String consecutivo = e.o.getvariable("numeroFac_txt");
+boolean b = true;
+                if (consecutivo != null && !consecutivo.isEmpty()) {
+                    
+                    System.out.println("entre aqui ::::" + consecutivo);
+                    
+                     EntityManager em = emf.createEntityManager();
+                    TypedQuery<Facturas> consultaDocumento = em.createNamedQuery("Facturas.findByFactConsecutivo", Facturas.class);
+                    consultaDocumento.setParameter("factConsecutivo", Integer.parseInt(consecutivo));
+                  
+                    if( consultaDocumento.getResultList().isEmpty()){
+                    
+                    Facturas f = new FacturasJpaController(emf).findFacturas(Integer.parseInt(fac));
+                    f.setFactConsecutivo(Integer.parseInt(consecutivo));
+                    new FacturasJpaController(emf).edit(f);}else{
+                      PrintWriter out = response.getWriter();
+out.print("<h1 style='color:red' > Este numero de factura ya ha sido utilizado, por favor utilize otro!!</h1>");
+b=!b;
+                   
+                   
+                   }
+                }
+if(b){
+//                hay que modificarlo para  que genere factura de verdad
+                HashMap map = new HashMap();
+                map.put("FACT_ID",fac);
+//                map.put("IMG_DIR", request.getSession(true).getServletContext().getRealPath("images/photo.png"));
+//                System.out.println(request.getSession(true).getServletContext().getRealPath("images/photo.png"));
+
+                GenerarReporte rep = new GenerarReporte(request, response, "reportes/report1.jasper", map);
+                rep.devuelveReporte();
+}
+            }else if(action.equals("")){
+//                aqui generar el certificado medico 
+                
+            
+            
+            }  else {
+                e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
+                e.getObjetoRespuestaVO().setRespuesta("1");
+                e.getObjetoRespuestaVO().setHtml("alert('no hay accion')");
+
+            }
+
+        } else {
+            ObjetoRespuestaVO ObjetoRespuestaVO = new ObjetoRespuestaVO();
+            e = new Mediador(ObjetoRespuestaVO);
+            e.getObjetoRespuestaVO().setRespuesta("0");
+            e.getObjetoRespuestaVO().setTipooperacion("error");
+            e.getObjetoRespuestaVO().setHtml("Variable de Sesion no encontrada");
+        }
+
+        if (x != null && !x.equals("GenerarFacVer")) {
+
+            PrintWriter out = response.getWriter();
+
+            System.out.println(new RespuestaXML().GenerarXML(e.getObjetoRespuestaVO()));
+            out.print(new RespuestaXML().GenerarXML(e.getObjetoRespuestaVO()));
+        }
+
+    }
+
+    private class itfaId {
+
+        Itemfactura i;
+        int id;
+
+        public itfaId(Itemfactura i, int id) {
+            this.i = i;
+            this.id = id;
+        }
+
+        public itfaId() {
+        }
+
+        public Itemfactura getI() {
+            return i;
+        }
+
+        public void setI(Itemfactura i) {
+            this.i = i;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Servlet_ctr_entidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(Servlet_ctr_entidades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><xs:schema xmlns:tns="http://ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws/">
+
+<xs:element name="anotaciones" type="tns:anotaciones" />
+
+<xs:element name="centrocostos" type="tns:centrocostos" />
+
+<xs:element name="ciudades" type="tns:ciudades" />
+
+<xs:element name="clientes" type="tns:clientes" />
+
+<xs:element name="departamentos" type="tns:departamentos" />
+
+<xs:element name="formularios" type="tns:formularios" />
+
+<xs:element name="guardarAnotacion" type="tns:guardarAnotacion" />
+
+<xs:element name="guardarAnotacionResponse" type="tns:guardarAnotacionResponse" />
+
+<xs:element name="guardarTicket" type="tns:guardarTicket" />
+
+<xs:element name="guardarTicketResponse" type="tns:guardarTicketResponse" />
+
+<xs:element name="movimientosfacturacion" type="tns:movimientosfacturacion" />
+
+<xs:element name="pacientes" type="tns:pacientes" />
+
+<xs:element name="paises" type="tns:paises" />
+
+<xs:element name="sede" type="tns:sede" />
+
+<xs:element name="ticket" type="tns:ticket" />
+
+<xs:element name="tipodocumento" type="tns:tipodocumento" />
+
+<xs:element name="tipoexamenMedico" type="tns:tipoexamenMedico" />
+
+<xs:complexType name="guardarTicket">
+<xs:sequence>
+<xs:element name="ticket" type="tns:ticket" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ticket">
+<xs:sequence>
+<xs:element name="cecoId" type="tns:centrocostos" minOccurs="0" />
+<xs:element name="mofoId" type="tns:movimientosfacturacion" minOccurs="0" />
+<xs:element name="sedeId" type="tns:sede" minOccurs="0" />
+<xs:element name="temeId" type="tns:tipoexamenMedico" minOccurs="0" />
+<xs:element name="tickEstado" type="xs:string" minOccurs="0" />
+<xs:element name="tickFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="tickFechaprocesado" type="xs:dateTime" minOccurs="0" />
+<xs:element name="tickFecharecepcion" type="xs:dateTime" minOccurs="0" />
+<xs:element name="tickFecharegistro" type="xs:dateTime" minOccurs="0" />
+<xs:element name="tickId" type="xs:int" minOccurs="0" />
+<xs:element name="tickPaciente" type="xs:int" />
+<xs:element name="tickRegistradopor" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="centrocostos">
+<xs:sequence>
+<xs:element name="cecoEstado" type="xs:string" minOccurs="0" />
+<xs:element name="cecoFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="cecoId" type="xs:int" minOccurs="0" />
+<xs:element name="cecoObservacion" type="xs:string" minOccurs="0" />
+<xs:element name="cecoRegistradopor" type="xs:string" minOccurs="0" />
+<xs:element name="clieId" type="tns:clientes" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clientes">
+<xs:sequence>
+<xs:element name="ciudId" type="tns:ciudades" minOccurs="0" />
+<xs:element name="clieDireccion" type="xs:string" minOccurs="0" />
+<xs:element name="clieDocumento" type="xs:string" minOccurs="0" />
+<xs:element name="clieEmail" type="xs:string" minOccurs="0" />
+<xs:element name="clieEstado" type="xs:string" minOccurs="0" />
+<xs:element name="clieFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="clieId" type="xs:int" minOccurs="0" />
+<xs:element name="clieNombre" type="xs:string" minOccurs="0" />
+<xs:element name="clieObservacion" type="xs:string" minOccurs="0" />
+<xs:element name="clieRegistradopor" type="xs:string" minOccurs="0" />
+<xs:element name="clieTelefonos" type="xs:string" minOccurs="0" />
+<xs:element name="clieTipo" type="xs:string" minOccurs="0" />
+<xs:element name="clierepLegal" type="xs:string" minOccurs="0" />
+<xs:element name="tidoId" type="tns:tipodocumento" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ciudades">
+<xs:sequence>
+<xs:element name="ciudFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="ciudId" type="xs:int" minOccurs="0" />
+<xs:element name="ciudNombre" type="xs:string" minOccurs="0" />
+<xs:element name="ciudRegistradopor" type="xs:int" />
+<xs:element name="depaId" type="tns:departamentos" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="departamentos">
+<xs:sequence>
+<xs:element name="depaFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="depaId" type="xs:int" minOccurs="0" />
+<xs:element name="depaNombre" type="xs:string" minOccurs="0" />
+<xs:element name="depaRegistradopor" type="xs:int" />
+<xs:element name="paisId" type="tns:paises" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paises">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0" />
+<xs:element name="iso" type="xs:string" minOccurs="0" />
+<xs:element name="nombre" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tipodocumento">
+<xs:sequence>
+<xs:element name="tidoDescripcion" type="xs:string" minOccurs="0" />
+<xs:element name="tidoFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="tidoId" type="xs:int" minOccurs="0" />
+<xs:element name="tidoRegistradopor" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="movimientosfacturacion">
+<xs:sequence>
+<xs:element name="mofaEstado" type="xs:string" minOccurs="0" />
+<xs:element name="mofaFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="mofaFechacreacion" type="xs:dateTime" minOccurs="0" />
+<xs:element name="mofaId" type="xs:int" minOccurs="0" />
+<xs:element name="mofaObservacion" type="xs:string" minOccurs="0" />
+<xs:element name="mofaRegistradopor" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sede">
+<xs:sequence>
+<xs:element name="sedeId" type="xs:int" minOccurs="0" />
+<xs:element name="sedeNombre" type="xs:string" minOccurs="0" />
+<xs:element name="sedeResponsable" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tipoexamenMedico">
+<xs:sequence>
+<xs:element name="temeDescripcion" type="xs:string" minOccurs="0" />
+<xs:element name="temeEstado" type="xs:string" minOccurs="0" />
+<xs:element name="temeFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="temeId" type="xs:int" minOccurs="0" />
+<xs:element name="temeRegistradopor" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="guardarTicketResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="guardarAnotacion">
+<xs:sequence>
+<xs:element name="anotacion" type="tns:anotaciones" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="anotaciones">
+<xs:sequence>
+<xs:element name="anotEstado" type="xs:string" minOccurs="0" />
+<xs:element name="anotFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="anotId" type="xs:int" minOccurs="0" />
+<xs:element name="anotRegistradopor" type="xs:string" minOccurs="0" />
+<xs:element name="anotvisiblePorClie" type="xs:int" />
+<xs:element name="formId" type="tns:formularios" minOccurs="0" />
+<xs:element name="paciId" type="tns:pacientes" minOccurs="0" />
+<xs:element name="ticsId" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="formularios">
+<xs:sequence>
+<xs:element name="examId" type="xs:int" minOccurs="0" />
+<xs:element name="formAction" type="xs:string" minOccurs="0" />
+<xs:element name="formCtr" type="xs:string" minOccurs="0" />
+<xs:element name="formDescripcion" type="xs:string" minOccurs="0" />
+<xs:element name="formId" type="xs:int" minOccurs="0" />
+<xs:element name="formTipo" type="xs:string" minOccurs="0" />
+<xs:element name="formTitulo" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pacientes">
+<xs:sequence>
+<xs:element name="paciApellidos" type="xs:string" minOccurs="0" />
+<xs:element name="paciArl" type="xs:string" minOccurs="0" />
+<xs:element name="paciDireccion" type="xs:string" minOccurs="0" />
+<xs:element name="paciDocumento" type="xs:string" minOccurs="0" />
+<xs:element name="paciDominancia" type="xs:string" minOccurs="0" />
+<xs:element name="paciEcivil" type="xs:string" minOccurs="0" />
+<xs:element name="paciEps" type="xs:string" minOccurs="0" />
+<xs:element name="paciEscolaridad" type="xs:string" minOccurs="0" />
+<xs:element name="paciFechacambio" type="xs:dateTime" minOccurs="0" />
+<xs:element name="paciFechanacimiento" type="xs:dateTime" minOccurs="0" />
+<xs:element name="paciFirma" type="xs:base64Binary" minOccurs="0" />
+<xs:element name="paciGenero" type="xs:string" minOccurs="0" />
+<xs:element name="paciHuella" type="xs:base64Binary" minOccurs="0" />
+<xs:element name="paciId" type="xs:int" minOccurs="0" />
+<xs:element name="paciNombres" type="xs:string" minOccurs="0" />
+<xs:element name="paciObservaciones" type="xs:string" minOccurs="0" />
+<xs:element name="paciRegistradopor" type="xs:string" minOccurs="0" />
+<xs:element name="paciRh" type="xs:string" minOccurs="0" />
+<xs:element name="paciTelefono" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="guardarAnotacionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

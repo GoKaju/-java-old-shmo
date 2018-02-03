@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/08/2016, 11:18:17 PM
+    Author     : D4V3
+*/
+
+
+#chat-side{
+    float: left;
+    width: 28%;
+    margin-left: 1%;
+
+}
+#chat-conversations{
+    float: left;
+    width: 69%;
+    margin-left: 1%;
+}
+.alert-info , .alert-success{
+    margin: 5px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+#chat-users, .chat-msj-container {
+    border: 0px solid blue;
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    padding-top: 5px;
+    overflow-y: scroll;
+
+}
+.mensajeOtros{
+    float: left;
+    width: 90%;
+    cursor: default;
+}
+.mensajeYo{
+    float: right;
+    width: 90%;
+    cursor: default;
+}
