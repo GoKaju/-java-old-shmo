@@ -4,6 +4,8 @@
     Author     : Sebas
 --%>
 
+<%@page import="ocupacional.JPA.valueobjects.Centrocostos"%>
+<%@page import="ocupacional.JPA.controlers.CentrocostosJpaController"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="ocupacional.JPA.controlers.SedeJpaController"%>
@@ -54,9 +56,9 @@
     ClientesJpaController clientesJpaController = new ClientesJpaController(emf);
     ManejadorFechas manejadorFechas = new ManejadorFechas();
     Cadenas o = new Cadenas();
-    String fini = request.getParameter("fini") ;
-    String ffin = request.getParameter("ffin") ;
-    String clie = request.getParameter("clie");
+    String fini = request.getParameter("fini");
+    String ffin = request.getParameter("ffin");
+    String cc = request.getParameter("cc");
     Sede sede = new SedeJpaController(emf).findSede(Integer.parseInt(request.getParameter("sede")));
 //    String fini = "2018-01-02 00:00:00";
 //    String ffin = "2018-01-31 23:59:59";
@@ -65,8 +67,7 @@
 //    Sede sede = new SedeJpaController(emf).findSede(2);
 //    String tipoReporte = request.getParameter("tipo");
 
-    Clientes clientes = clientesJpaController.findClientes(Integer.parseInt(clie));
-
+    Centrocostos ccvo = new CentrocostosJpaController(emf).findCentrocostos(Integer.parseInt(cc));
     Query cons = em.createNativeQuery(
             "select "
             + "distinct(serv.serv_id),"
@@ -77,17 +78,16 @@
             + "inner join clientes_servicio cls on cls.clse_id = tcs.clse_id "
             + "inner join servicios serv on serv.serv_id = cls.serv_id "
             + "where tick.tick_estado = 'PROCESADO' "
-            + "and cc.clie_id = ? "
+            + "and cc.ceco_id = ? "
             + "and tick.sede_id = ? "
             + "and tick.tick_fechaprocesado BETWEEN ? AND ? "
             + "order by serv.serv_id ");
 
-    cons.setParameter(1, clientes.getClieId());
+    cons.setParameter(1, ccvo.getCecoId());
     cons.setParameter(2, sede.getSedeId());
     cons.setParameter(3, manejadorFechas.DevuelveFormato(manejadorFechas.retornaTimestamp(fini, "dd-MM-yyyy"), "yyyy-MM-dd"));
     cons.setParameter(4, manejadorFechas.DevuelveFormato(manejadorFechas.retornaTimestamp(ffin + " 23:59:59", "dd-MM-yyyy HH:mm:ss"), "yyyy-MM-dd HH:mm:ss"));
 
- 
     List<Object[]> lisExamenes = cons.getResultList();
 
     Query cons2 = em.createNativeQuery(
@@ -158,18 +158,18 @@
             + " inner join sede sede on sede.sede_id = tick.sede_id "
             + " where "
             + " tick.tick_estado = 'PROCESADO' "
-            + " and cc.clie_id = ? "
+            + " and cc.ceco_id = ? "
             + " and tick.sede_id = ? "
             + " and "
             + " tick.tick_fechaprocesado BETWEEN ? AND ?");
 
-    cons2.setParameter(1, clientes.getClieId());
+    cons2.setParameter(1, ccvo.getCecoId());
     cons2.setParameter(2, sede.getSedeId());
     cons2.setParameter(3, manejadorFechas.DevuelveFormato(manejadorFechas.retornaTimestamp(fini, "dd-MM-yyyy"), "yyyy-MM-dd"));
     cons2.setParameter(4, manejadorFechas.DevuelveFormato(manejadorFechas.retornaTimestamp(ffin + " 23:59:59", "dd-MM-yyyy HH:mm:ss"), "yyyy-MM-dd HH:mm:ss"));
     List<Object[]> lisTickets = cons2.getResultList();
 
-    String filename = clientes.getClieNombre() + " " + fini + " - " + ffin;
+    String filename = ccvo.getClieId().getClieNombre() + "-" + ccvo.getCecoObservacion() + "" + fini + " - " + ffin;
 //    String filename = String.valueOf(lisTickets.size());
 //    response.setContentType("application/vnd.ms-excel");
 //    response.setHeader("Content-Disposition", "inline; filename=" + filename + ".xls");
@@ -220,7 +220,7 @@
                 <tr>
                     <th style="text-align: center" colspan="<%=14 + lisExamenes.size()%>">
 
-                        REPORTE DE ORDENES PROCESADAS PARA  <%=clientes.getClieNombre()%> ENTRE <%=fini%> y <%=ffin%>
+                        REPORTE DE ORDENES PROCESADAS PARA  <%= ccvo.getClieId().getClieNombre() + "-" + ccvo.getCecoObservacion()%> ENTRE <%=fini%> y <%=ffin%>
 
                     </th>
                 </tr>
@@ -336,12 +336,12 @@
                 <tr>
                     <th colspan="6">DESCRIPCION</th>
                     <th colspan="3">CANTIDAD</th>
-<!--                    <th colspan="3">VALOR U.</th>
-                    <th colspan="3">TOTAL</th></tr>-->
+                    <!--                    <th colspan="3">VALOR U.</th>
+                                        <th colspan="3">TOTAL</th></tr>-->
 
-                <%  for (Map.Entry<String,conteo> entry : mapaConteo.entrySet()) {
-                    conteo cs = entry.getValue();
-        %> 
+                    <%  for (Map.Entry<String, conteo> entry : mapaConteo.entrySet()) {
+                            conteo cs = entry.getValue();
+                    %> 
                 <tr>
                     <td colspan="6"><%=cs.servicioNom%></td>
                     <td colspan="3"><%=cs.cont%></td>

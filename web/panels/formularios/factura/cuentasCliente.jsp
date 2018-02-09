@@ -46,7 +46,7 @@
 
         }
 
-        RolFuncionalidadVOs rf = new RolFuncionalidadDAO(e).Cargar(idf);
+       // RolFuncionalidadVOs rf = new RolFuncionalidadDAO(e).Cargar(idf);
 
         FechasCuentasCliente fcu = (FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
@@ -55,7 +55,7 @@
         SedeJpaController sededao = new SedeJpaController(emf);
         if (fcu == null) {
             fcu = new FechasCuentasCliente();
-            fcu.setFechaInicio(f.StringToTimeStamp("01-01-2016"));
+            fcu.setFechaInicio(f.StringToTimeStampHora(f.DevuelveFormato(f.getFechaHoraTimeStamp()) + " 00:00:00"));
 //       fcu.setFechaInicio(f.StringToTimeStamp("24-12-2016"));
             fcu.setFechaFin(f.StringToTimeStampHora(f.DevuelveFormato(f.getFechaHoraTimeStamp()) + " 23:59:59"));
 
@@ -160,7 +160,7 @@
                             <td><%if (cuenta > 0) {%>DEUDA<%} else {%><%=c.getClieEstado()%><%}%></td>
                             <td style="font-weight: bold">$<%=pc.getNumber(cuenta)%></td>
                             <td>
-                                <%if (rf.getRofu_op().indexOf("M") != -1) {%><button type="button" value="<%=c.getClieId()%>" title="Ver cuenta" class="btn-circle btn-success bottom-right " onclick="peticionAjax('../Cuentas', 'action=cuentaVer&id=' + this.value)"><i class="glyphicon glyphicon-search"></i> </button><% }%>
+                               <button type="button" value="<%=c.getClieId()%>" title="Ver cuenta" class="btn-circle btn-success bottom-right " onclick="peticionAjax('../Cuentas', 'action=cuentaVer&id=' + this.value)"><i class="glyphicon glyphicon-search"></i> </button>
 
                         </tr>
                         <%

@@ -52,12 +52,11 @@
 
         }
 
-        RolFuncionalidadVOs rf = new RolFuncionalidadDAO(e).Cargar(idf);
 
         Clientes ClienteVO = (Clientes) session.getAttribute("ClienteVO");
 
         if (ClienteVO.getClieId() != null) {
-                        FechasCuentasCliente fcu = (FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
+            FechasCuentasCliente fcu = (FechasCuentasCliente) session.getAttribute("fechasCuentasClienteFacturacion");
 
 %>
 
@@ -88,14 +87,27 @@
                         <label for="tipoReporte_sel" class="control-label"> Tipo de reporte</label> 
                         <select name="tipoReporte_sel" id="tipoReporte_sel" class="form-control">
                            <option value="">Cuadro Ordenes procesadas</option>
-                           <option value="1">Cuadro Ordenes procesadas TK7</option>
+                           <option value="1">Cuadro Ordenes tipo TK7</option>
+                           <option value="2">Cuadro Ordenes tipo Adecco</option>
                        </select>
                     </div>
-                    <div class="col-md-4 " style="margin-top: 25px">
+                    <div class="col-md-2 " style="margin-top: 25px">
                         
                         <button type="button" class="btn btn-success" onclick="
+                            if($('#tipoReporte_sel').val()==='2'){
+                                window.open('reportes/reportExcel/ordenes_servicio_x_empresa_vertical?sede=<%=fcu.getSede().getSedeId() %>&clie=<%=ClienteVO.getClieId()%>&fini=<%=f.DevuelveFormato(fcu.getFechaInicio())%>&ffin=<%=f.DevuelveFormato(fcu.getFechaFin()) %>');
+                                
+                            }else{
                                 window.open('reportes/reportExcel/ordenes_servicio_x_empresa?sede=<%=fcu.getSede().getSedeId() %>&clie=<%=ClienteVO.getClieId()%>&fini=<%=f.DevuelveFormato(fcu.getFechaInicio())%>&ffin=<%=f.DevuelveFormato(fcu.getFechaFin()) %>&tipo='+$('#tipoReporte_sel').val());
+                        }
                                 ">Generar Excel</button>
+                        
+                    </div>
+                    <div class="col-md-2 " style="margin-top: 25px">
+                        
+                        <button type="button" class="btn btn-success" onclick="
+                        RecargaPanel('../panels/formularios/factura/cuentasClienteGenerarxSede.jsp', 'panelprincipal')
+                                ">Generar Excel x Sede/finca</button>
                         
                     </div>
                    
