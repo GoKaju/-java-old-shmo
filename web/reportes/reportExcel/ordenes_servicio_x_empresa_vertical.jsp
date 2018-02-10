@@ -187,7 +187,7 @@
         <style type="text/css">
             body{
 
-                font-size: 9px; 
+                font-size: 7px; 
             }
             table
             {
@@ -208,6 +208,9 @@
                 border: 2px solid black; 
                 word-wrap: break-word;
 
+            }
+               a{
+                font-size: 16px;
             }
         </style>
     </head>
@@ -383,7 +386,7 @@
                     }
                 } else {
                     $('#test').attr('href', data_type + ', ' + encodeURIComponent(tab_text));
-                    $('#test').attr('download', '<%=filename%>');
+                    $('#test').attr('download', '<%=filename%>.xls');
                 }
 
             }

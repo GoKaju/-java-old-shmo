@@ -209,6 +209,9 @@
                 word-wrap: break-word;
 
             }
+            a{
+                font-size: 16px;
+            }
         </style>
     </head>
     <body>
@@ -383,7 +386,7 @@
                     }
                 } else {
                     $('#test').attr('href', data_type + ', ' + encodeURIComponent(tab_text));
-                    $('#test').attr('download', '<%=filename%>');
+                    $('#test').attr('download', '<%=filename%>.xls');
                 }
 
             }
