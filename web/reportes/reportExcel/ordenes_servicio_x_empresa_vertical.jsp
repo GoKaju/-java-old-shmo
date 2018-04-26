@@ -286,19 +286,27 @@
                     <%
                         if (lisExamenes != null) {
                             String examenes = tick[11] != null ? (String) tick[11] : "";
+                            System.out.println("EXAM-> "+examenes);
                             String[] lexa = examenes.split(",");
                             for (Object[] exa : lisExamenes) {
                                 String esta = "";
                                 for (String e : lexa) {
+                                    
+                                    System.out.println("COMP->" + e.equals(exa[0].toString()) +" -> "+ e+" ; "+exa[0].toString());
                                     if (e.equals(exa[0].toString())) {
                                         esta = "1";
+                                        System.out.println("COMP->ENTRO "+exa[1].toString());
                                         if (!mapaConteo.containsKey(e)) {
+                                            System.out.println("COMP->CREO ");
                                             conteo c = new conteo();
                                             c.servicioNom = exa[1].toString();
                                             c.cont = 0;
                                             mapaConteo.put(e, c);
                                         }
+                                        System.out.println("COMP->A "+mapaConteo.get(e).cont);
                                         mapaConteo.get(e).cont++;
+                                        System.out.println("COMP->D "+mapaConteo.get(e).cont);
+                                        break;
                                     }
                                 }
                     %>
@@ -339,6 +347,7 @@
                 <tr>
                     <th colspan="6">DESCRIPCION</th>
                     <th colspan="3">CANTIDAD</th>
+                    <th>key</th>
 <!--                    <th colspan="3">VALOR U.</th>
                     <th colspan="3">TOTAL</th></tr>-->
 
@@ -348,6 +357,7 @@
                 <tr>
                     <td colspan="6"><%=cs.servicioNom%></td>
                     <td colspan="3"><%=cs.cont%></td>
+                    <td><%=entry.getKey() %>  </td>
 
                 </tr>
                 <%}%>

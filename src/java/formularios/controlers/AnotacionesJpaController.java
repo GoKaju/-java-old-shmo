@@ -81,6 +81,7 @@ public class AnotacionesJpaController implements Serializable {
             }
             anotaciones.setHuellafirmaList(attachedHuellafirmaList);
             em.persist(anotaciones);
+            
             if (paciId != null) {
                 paciId.getAnotacionesList().add(anotaciones);
                 paciId = em.merge(paciId);

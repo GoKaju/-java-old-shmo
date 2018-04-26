@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,7 +70,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
             if (action.equals("valPaciente")) {
 
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP1PU");
-                                emf.getCache().evictAll();
+                emf.getCache().evictAll();
 
                 PacientesJpaController pacic = new PacientesJpaController(emf);
 
@@ -110,7 +111,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
                     TicketsDAO tdao = new TicketsDAO(e);
 
                     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP1PU");
-                                    emf.getCache().evictAll();
+                    emf.getCache().evictAll();
 
                     PacientesJpaController pacic = new PacientesJpaController(emf);
 //                   se debe cargar por numero de documento 
@@ -264,10 +265,10 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
                     TicketsDAO tdao = new TicketsDAO(e);
 
                     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP1PU");
-                                    emf.getCache().evictAll();
+                    emf.getCache().evictAll();
 
                     EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("JavaP");
-                emf2.getCache().evictAll();
+                    emf2.getCache().evictAll();
 
                     PacientesJpaController pacic = new PacientesJpaController(emf);
 //                   se debe cargar por numero de documento 
@@ -315,7 +316,9 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
                         t.setTeme_id(e.o.getvariable("tipo_examen"));
                         t.setTick_estado(e.o.getvariable("tick_estado"));
                         if (t.getTick_estado().equals("PROCESADO")) {
-                        if(t.getTick_fechaprocesado()==null){t.setTick_fechaprocesado(fechas.getFechaHoraTimeStamp());}
+                            if (t.getTick_fechaprocesado() == null) {
+                                t.setTick_fechaprocesado(fechas.getFechaHoraTimeStamp());
+                            }
                         }
 
                         t.setTick_brigada(e.o.getvariable("nombreBrigada"));
@@ -410,7 +413,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
                                             }
                                         }
                                     }
-                                    
+
                                 }
 //                                System.out.println("Voy a hacer Flush");
 //                                em.flush();
@@ -561,7 +564,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
             } else if (action.equals("cambiarCC")) {
 //            aqui voy
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
-                                emf.getCache().evictAll();
+                emf.getCache().evictAll();
 
                 String id = e.o.getvariable("id");
                 String cc_id = e.o.getvariable("centro_costo");
@@ -587,7 +590,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
 
                 if (!id.equals("")) {
                     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
-                                    emf.getCache().evictAll();
+                    emf.getCache().evictAll();
 
                     String x = "";
 
@@ -627,19 +630,20 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
                 emf2.getCache().evictAll();
 
                 TicketJpaController tdao = new TicketJpaController(emf);
-                
+
                 ocupacional.JPA.valueobjects.Ticket t = tdao.findTicket(Integer.parseInt(e.o.getvariable("tick")));
                 t.setTickEstado("PROCESADO");
                 t.setTickFechaprocesado(fechas.getFechaHoraTimeStamp());
-                  //DG 20171018 : agregar emple id del medico al campo emple_idmedico
-                  System.out.println(" //DG 20171018 : agregar emple id del medico al campo emple_idmedico::: "+t.getEmplIdmedico());
-                        if (t.getEmplIdmedico()== null) {
-                           try{
-                                t.setEmplIdmedico(Integer.parseInt(e.getUsuarioVO().getIdpersona()));
-                           }catch(Exception ex){
-                           ex.printStackTrace();}
-                            
-                        }
+                //DG 20171018 : agregar emple id del medico al campo emple_idmedico
+                System.out.println(" //DG 20171018 : agregar emple id del medico al campo emple_idmedico::: " + t.getEmplIdmedico());
+                if (t.getEmplIdmedico() == null) {
+                    try {
+                        t.setEmplIdmedico(Integer.parseInt(e.getUsuarioVO().getIdpersona()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
 
                 EntityManager em = emf2.createEntityManager();
 // 24-08 11:47pm estoy en esta parte error de sintaxis mysql javap.anotaciones no existe
@@ -682,6 +686,50 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
 
                 }
 
+            } else if (action.equals("buscarTiketEmpresa")) {
+                session.removeAttribute("listaTiketEmpresa");
+                String doc = e.o.getvariable("doc");
+                String nombre = e.o.getvariable("nombre");
+                String clie_ocu = e.o.getvariable("clie_ocu");
+
+//                if (!doc.isEmpty() || !nombre.isEmpty()) {
+                    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
+                    EntityManager em = emf.createEntityManager();
+
+                    Query q = em.createNativeQuery("select tick.tick_id , \n"
+                            + "cc.ceco_observacion, \n"
+                            + "paci.paci_documento , \n"
+                            + "concat(paci.paci_nombres,' ', paci.paci_apellidos) as nombres, \n"
+                            + "teme.teme_descripcion, \n"
+                            + "tick.tick_fecharegistro, \n"
+                            + "tick.tick_estado \n"
+                            + " from javap.ticket tick \n"
+                            + "inner join javap.centrocostos cc on cc.ceco_id = tick.ceco_id and cc.clie_id = ? \n"
+                            + "inner join javaphc.pacientes paci on paci.paci_id = tick.tick_paciente \n"
+                            + "and paci.paci_documento like ? \n"
+                            + "and  concat(paci.paci_nombres,' ', paci.paci_apellidos)  like ? \n"
+                            + "inner join javap.tipoexamen_medico teme on teme.teme_id = tick.teme_id \n"
+                            + "order by 1 desc \n"
+                            + "limit 20");
+                    q.setParameter(1, clie_ocu);
+                    q.setParameter(2, "%" + doc + "%");
+                    q.setParameter(3, "%" + nombre + "%");
+
+                    List<Object[]> results = q.getResultList();
+
+                    em.close();
+//
+                    session.setAttribute("listaTiketEmpresa", results);
+//
+                    e.getObjetoRespuestaVO().setRespuesta("1");
+                    e.getObjetoRespuestaVO().setHtml("recargarBusqueda();");
+
+//                } else {
+//
+//                    e.getObjetoRespuestaVO().setRespuesta("1");
+//                    e.getObjetoRespuestaVO().setHtml("alertify.error('Introduzca algun dato para la busqueda...');");
+//
+//                }
             } else {
                 e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");
                 e.getObjetoRespuestaVO().setRespuesta("1");

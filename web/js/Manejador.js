@@ -84,12 +84,28 @@ function peticionAjax(ctr, datos) {
             }
         });
     } else {
-
-
         alertify.error("Verifique los campos");
     }
 }
 
+function peticionAjaxSinValidar(ctr, datos) {
+
+        $.ajax({
+            url: ctr,
+            type: "POST",
+            data: datos,
+            dataType: "xml",
+            success: function (data) {
+//                alert(datos)
+                xml_response(data);
+            },
+            error: function () {
+
+                alert("Error en el procesamiento");
+            }
+        });
+
+}
 
 function llenarFormJson(json) {
     var o = jQuery.parseJSON(json);

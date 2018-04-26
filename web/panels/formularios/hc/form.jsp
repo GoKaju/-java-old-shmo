@@ -37,14 +37,16 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="valeria.response.Mediador"%>
 <%    Mediador e = (Mediador) session.getAttribute("Mediador");
-    Cadenas o = new Cadenas();
     ManejadorFechas fechas = new ManejadorFechas();
+    Cadenas o = new Cadenas();
+System.out.println("TESTE DEMORA FORM::: 1 -> "+ fechas.getFechaHoraTimeStamp());
     if (e != null) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP1PU");
         EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("JavaP");
         EntityManager em = emf.createEntityManager();
         try{
-        
+        System.out.println("TESTE DEMORA FORM::: 2 -> "+ fechas.getFechaHoraTimeStamp());
+
 //   variables necesarias 
         String idform = request.getParameter("idform");
         if (idform == null) {
@@ -65,6 +67,7 @@
         }
 //variables de session necesarias 
 
+System.out.println("TESTE DEMORA FORM::: 3 -> "+ fechas.getFechaHoraTimeStamp());
 
         
         FormulariosJpaController fc = new FormulariosJpaController(emf);
@@ -79,10 +82,13 @@
 //  determinar si el formulario ya fue llenado y cargar anotacion
 //  cargar por tcls
 
+System.out.println("TESTE DEMORA FORM::: 4 -> "+ fechas.getFechaHoraTimeStamp());
+
         System.out.println("entre a form " + tcls);
         Anotaciones anot = new Anotaciones();
         AnotacionesJpaController anotdao = new AnotacionesJpaController(emf);
         session.removeAttribute("Anotacion");
+System.out.println("TESTE DEMORA FORM::: 5 -> "+ fechas.getFechaHoraTimeStamp());
 
         TicketClienteservicio tclsVO = new TicketClienteservicioJpaController(emf2).findTicketClienteservicio(Integer.parseInt(tcls));
         TypedQuery<Anotaciones> consultaxtcls = em.createNamedQuery("Anotaciones.findByTCLS", Anotaciones.class);
@@ -90,29 +96,41 @@
         consultaxtcls.setParameter("formId", f);
         List<Anotaciones> lista = consultaxtcls.getResultList();
         System.out.println("entre a lista " + lista.isEmpty());
+System.out.println("TESTE DEMORA FORM::: 6 -> "+ fechas.getFechaHoraTimeStamp());
 
          if (!lista.isEmpty()) {
             for (Anotaciones a : lista) {
                 anot = a;
             }
         }
+System.out.println("TESTE DEMORA FORM::: 7 -> "+ fechas.getFechaHoraTimeStamp());
 
         // recrear formulario con anotacion
         String anot_id = "";
         if (anot.getAnotId() != null) {
             anot_id = anot.getAnotId().toString();
-
             session.setAttribute("Anotacion", anot);
         } else {
+            System.out.println("TESTE DEMORA FORM::: 8 -> "+ fechas.getFechaHoraTimeStamp());
+
             anot.setAnotEstado("PRE EDICION");
             anot.setAnotRegistradopor(e.getUsuarioVO().getIdUsuario());
             anot.setAnotFechacambio(fechas.getFechaHoraTimeStamp());
             anot.setFormId(f);
             anot.setPaciId(paci);
             anot.setTicsId(Integer.parseInt(tcls));
-            anotdao.create(anot);
+            System.out.println("TESTE DEMORA FORM::: 9 -> "+ fechas.getFechaHoraTimeStamp());
+//            anotdao.create(anot);
+
+            em.getTransaction().begin();
+            em.persist(anot);
+            em.getTransaction().commit();
+          
+            System.out.println("TESTE DEMORA FORM::: 10 -> "+ fechas.getFechaHoraTimeStamp());
             anot_id = anot.getAnotId().toString();
             session.setAttribute("Anotacion", anot);
+            System.out.println("TESTE DEMORA FORM::: 11 -> "+ fechas.getFechaHoraTimeStamp());
+
         }
 
 
@@ -229,7 +247,10 @@
         <div class="panel-body">
 
             <div class="row">
-                <% for (Categorias cate : f.getCategoriasList()) {%>
+                <%
+                    System.out.println("TESTE DEMORA FORM::: 12 -> "+ fechas.getFechaHoraTimeStamp());
+
+                    for (Categorias cate : f.getCategoriasList()) {%>
                 <fieldset>
                     <legend><%=o.notEmpty(cate.getCateDescripcion())%></legend>
 
@@ -760,7 +781,10 @@
                     </script>
                 </fieldset>
 
-                <% }%>
+                <% }
+                System.out.println("TESTE DEMORA FORM::: 13 -> "+ fechas.getFechaHoraTimeStamp());
+
+                %>
 
 
 

@@ -38,7 +38,7 @@
 <%@page import="valeria.response.Mediador"%>
 <%   
 
-
+session.removeAttribute("listaTiketEmpresa");
  Mediador e = (Mediador) session.getAttribute("Mediador");
     Cadenas pc = new Cadenas();
     

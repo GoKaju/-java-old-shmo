@@ -81,11 +81,31 @@
     <div class="panel-body">
         <div class="row">
 
+            <fieldset>
+                <legend>Cuadro de busqueda</legend>
+                <div class="form-group col-md-3">
+                    <label class="control-label" for="doc"># Documento*</label>
+                    <input  id="doc" name="doc" placeholder="Numero de documento"  class="form-control " type="number" required  >
+                    <span class="help-block"></span>
+                </div>
+                 <div class="form-group col-md-3">
+                    <label class="control-label" for="doc"> Nombres*</label>
+                    <input  id="nombre" name="nombre" placeholder="Nombre"  class="form-control " type="text" required  >
+                    <span class="help-block"></span>
+                </div>
+                <div class="col-md-3">
+                    <button onclick="peticionAjaxSinValidar('../OrdenServicio', 'action=buscarTiketEmpresa&clie_ocu=<%=request.getParameter("clie_ocu")%>&doc=' + $('#doc').val()+'&nombre=' + $('#nombre').val())" class="btn btn-circle btn-primary" type="button" style="margin-top:  25px" > <i class="glyphicon glyphicon-search"></i></button>
 
-            <fieldset id="caja">
+                </div>
+
+
+            </fieldset>
+
+
+            <fieldset id="cajaTicketsEmpresa">
                 <legend></legend>
                 <!-- Table -->
-                <table id="tabla" class="table table-hover ">
+                <table id="tablaTicketsEmpresa" class="table table-hover ">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -93,7 +113,7 @@
                             <th>N° DOCUMENTO</th>
                             <th>NOMBRES</th>
                             <th>TIPO</th>
-                            <th>SERVICIOS</th>
+<!--                            <th>SERVICIOS</th>-->
                             <th>F. DE REGISTRO</th>
                             <th>ESTADO</th>
                             <th>ACCIONES</th>
@@ -101,55 +121,30 @@
                     </thead>
                     <tbody>
                         <%
-                            for (Centrocostos cc : ClienteVO.getCentrocostosList()) {
-                                List<Ticket> listaTickets = cc.getTicketList();
-Collections.reverse(listaTickets);
-                                PacientesJpaController pacic = new PacientesJpaController(emf);
-                                for (Ticket t : listaTickets) {
-                                    Pacientes paci = pacic.findPacientes(t.getTickPaciente());
-                                    if (paci == null) {
-                                        paci = new Pacientes();
-                                    }
+                            
+                            
+                                List<Object[]> listaTickets = (List)session.getAttribute("listaTiketEmpresa");
 
+                                
+                                if(listaTickets != null && !listaTickets.isEmpty()){
+                                for (Object[] t : listaTickets) {
+                            
 
                         %>
                         <tr>
-                            <td><%=String.format("%05d", t.getTickId())%></td>
-                            <td><%=cc.getCecoObservacion()%></td>
-                            <td><%=pc.notEmpty(paci.getPaciDocumento())%></td>
-                            <td><%=pc.notEmpty(paci.getPaciNombres() + " " + paci.getPaciApellidos())%></td>
-                            <td><%=t.getTemeId().getTemeDescripcion()%>
-                               <%if(t.getTemeId()!= null && t.getTemeId().getTemeId().equals(7)){%>
-                             <br /><%=pc.notEmpty(t.getTickOtroexamen()) %>
-                            
-                            <%}%>
-                            </td>
+                            <td><%=String.format("%06d", t[0])%></td>
+                            <td><%=t[1].toString() %></td>
+                            <td><%=t[2].toString()%></td>
+                            <td><%=t[3].toString()%></td>
+                            <td><%=t[4].toString()%></td>
+                            <td><%=t[5].toString()%></td>
+                            <td><%=t[6].toString()%></td>
                             <td>
-                                <%
-                                    List<TicketClienteservicio> l = t.getTicketClienteservicioList();
-
-                                    if (l != null) {
-                                        for (TicketClienteservicio tcs : l) {
-
-                                            ClientesServicio cs = tcs.getClseId();
-
-                                %>
-                                *<%=cs.getServId().getServNombre()%><br/>
-                                <% }
-                                    }%>
+                                <button type="button" value="<%=t[0].toString() %>" class="btn-circle btn-success  bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio_ver.jsp?id=<%= t[0].toString()%>', 'panelprincipal')"><i class="glyphicon glyphicon-search"></i> </button>
 
 
-
-
-                            </td>
-                            <td><%=f.FechaLetrasHora(t.getTickFecharegistro())%></td>
-                            <td><%=t.getTickEstado()%></td>
-                            <td>
-                                <button type="button" value="<%= t.getTickId()%>" class="btn-circle btn-success  bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio_ver.jsp?id=<%= t.getTickId()%>', 'panelprincipal')"><i class="glyphicon glyphicon-search"></i> </button>
-
-
-                                <%if (t.getTickEstado().equalsIgnoreCase("POR PROCESAR")) {%>    <button type="button" class="btn-circle btn-default  bottom-right btn-outline"  value="<%= t.getTickId()%>" onclick="peticionAjax('../OrdenServicio', 'action=eliminarSSession&id_ocu=<%=ClienteVO.getClieId()%>&id=<%= t.getTickId()%>');"><i class="glyphicon glyphicon-pencil"></i> </button><% }%>
-                                <%if (t.getTickEstado().equalsIgnoreCase("POR PROCESAR")) {%>   <button type="button" value="<%= t.getTickId()%>"  onclick="eliminarRegistro('../OrdenServicio', 'action=eliminarTicket&id_ocu=<%=ClienteVO.getClieId()%>&id=' + this.value)" class="btn-circle btn-danger bottom-right btn-outline"><i class="glyphicon glyphicon-remove"></i> </button><% }%></td>
+                                <%if (t[6].toString().equalsIgnoreCase("POR PROCESAR")) {%>    <button type="button" class="btn-circle btn-default  bottom-right btn-outline"  value="<%= t[0].toString()%>" onclick="peticionAjax('../OrdenServicio', 'action=eliminarSSession&id_ocu=<%=ClienteVO.getClieId()%>&id=<%= t[0].toString()%>');"><i class="glyphicon glyphicon-pencil"></i> </button><% }%>
+                                <%if (t[6].toString().equalsIgnoreCase("POR PROCESAR")) {%>   <button type="button" value="<%= t[0].toString()%>"  onclick="eliminarRegistro('../OrdenServicio', 'action=eliminarTicket&id_ocu=<%=ClienteVO.getClieId()%>&id=' + this.value)" class="btn-circle btn-danger bottom-right btn-outline"><i class="glyphicon glyphicon-remove"></i> </button><% }%></td>
                         </tr>
                         <%      }
                             }
@@ -206,42 +201,50 @@ Collections.reverse(listaTickets);
 </div>
 
 <script data-config>
-    var filtersConfig = {
-        base_path: '../tablefilter/',
-        col_1: 'select',
-        col_4: 'select',
-        col_7: 'select',
-        col_8: 'none',
-        alternate_rows: true,
-        btn_reset: true,
-        paging: true,
-        results_per_page: ['Resultados por Pag.', [10, 25, 50, 100]],
-        rows_counter: true,
-        loader: true,
-        status_bar: true,
-        mark_active_columns: true,
-        highlight_keywords: true,
-        extensions: [{name: 'sort'}]
-    };
+//    var filtersConfig = {
+//        base_path: '../tablefilter/',
+//        col_1: 'select',
+//        col_4: 'select',
+//        col_7: 'select',
+//        col_8: 'none',
+//        alternate_rows: true,
+//        btn_reset: true,
+//        paging: true,
+//        results_per_page: ['Resultados por Pag.', [10, 25, 50, 100]],
+//        rows_counter: true,
+//        loader: true,
+//        status_bar: true,
+//        mark_active_columns: true,
+//        highlight_keywords: true,
+//        extensions: [{name: 'sort'}]
+//    };
+//
+//    var tf = new TableFilter('tabla', filtersConfig);
+//    tf.emitter.on(['after-filtering'], function () {
+//        console.log("hola voy a filtrar");
+//    });
+//
+//
+//    tf.init();
 
-    var tf = new TableFilter('tabla', filtersConfig);
 
-
-    tf.init();
-
+function recargarBusqueda(){
+    
+    $('#cajaTicketsEmpresa').load('../panels/formularios/factura/ordenServicio.jsp?clie_ocu=<%=request.getParameter("clie_ocu")%>  #tablaTicketsEmpresa',function(){alertify.success('Procesados con exito')})
+}
 
 </script>
 
 <script>
     $(document).ready(function () {
-        ValidarFormID();
-        $('.datepicker').datepicker();
+//        ValidarFormID();
+//        $('.datepicker').datepicker();
 
 
     });
-    $(".close").click(function () {
-        $('#Form-Data').bootstrapValidator('resetForm', true);
-    });
+//    $(".close").click(function () {
+//        $('#Form-Data').bootstrapValidator('resetForm', true);
+//    });
 
 </script>
 <% } else {
