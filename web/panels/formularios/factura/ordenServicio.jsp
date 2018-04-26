@@ -94,7 +94,7 @@
                     <span class="help-block"></span>
                 </div>
                 <div class="col-md-3">
-                    <button onclick="peticionAjaxSinValidar('../OrdenServicio', 'action=buscarTiketEmpresa&clie_ocu=<%=request.getParameter("clie_ocu")%>&doc=' + $('#doc').val()+'&nombre=' + $('#nombre').val())" class="btn btn-circle btn-primary" type="button" style="margin-top:  25px" > <i class="glyphicon glyphicon-search"></i></button>
+                    <button onclick="peticionAjaxSinValidar('../OrdenServicio', 'action=buscarTiketEmpresa&clie_ocu=<%=ClienteVO.getClieId()%>&doc=' + $('#doc').val()+'&nombre=' + $('#nombre').val())" class="btn btn-circle btn-primary" type="button" style="margin-top:  25px" > <i class="glyphicon glyphicon-search"></i></button>
 
                 </div>
 
@@ -110,7 +110,7 @@
                         <tr>
                             <th>#</th>
                             <th title="Sede de la empresa cliente ">SEDE</th>
-                            <th>N° DOCUMENTO</th>
+                            <th>NÂ° DOCUMENTO</th>
                             <th>NOMBRES</th>
                             <th>TIPO</th>
 <!--                            <th>SERVICIOS</th>-->
@@ -230,7 +230,7 @@
 
 function recargarBusqueda(){
     
-    $('#cajaTicketsEmpresa').load('../panels/formularios/factura/ordenServicio.jsp?clie_ocu=<%=request.getParameter("clie_ocu")%>  #tablaTicketsEmpresa',function(){alertify.success('Procesados con exito')})
+    $('#cajaTicketsEmpresa').load('../panels/formularios/factura/ordenServicio.jsp?clie_ocu=<%=ClienteVO.getClieId()%>  #tablaTicketsEmpresa',function(){alertify.success('Procesados con exito')})
 }
 
 </script>
