@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -53,6 +54,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pacientes.findByPaciRegistradopor", query = "SELECT p FROM Pacientes p WHERE p.paciRegistradopor = :paciRegistradopor"),
     @NamedQuery(name = "Pacientes.findByPaciFechacambio", query = "SELECT p FROM Pacientes p WHERE p.paciFechacambio = :paciFechacambio")})
 public class Pacientes implements Serializable {
+    @Size(max = 100)
+    @Column(name = "paci_vinculacion_eps")
+    private String paciVinculacionEps;
     @Lob
     @Column(name = "paci_huella")
     private byte[] paciHuella;
@@ -301,8 +305,6 @@ public class Pacientes implements Serializable {
         this.paciObservaciones = paciObservaciones;
     }
 
-  
-
     public String getPaciFoto() {
         return paciFoto;
     }
@@ -320,10 +322,12 @@ public class Pacientes implements Serializable {
         this.ciudId = ciudId;
     }
 
+    public String getPaciVinculacionEps() {
+        return paciVinculacionEps;
+    }
 
-
-
-   
-
+    public void setPaciVinculacionEps(String paciVinculacionEps) {
+        this.paciVinculacionEps = paciVinculacionEps;
+    }
     
 }

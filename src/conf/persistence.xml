@@ -29,12 +29,12 @@
     <validation-mode>NONE</validation-mode>
     <properties>
       <property name="eclipselink.canonicalmodel.subpackage" value="hc"/>
-      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javaphc?autoReconnect=true"/>-->
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://hc.javapsaludocupacional.com.co:3306/javapHC?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="dave"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javaphc?autoReconnect=true"/>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://hc.javapsaludocupacional.com.co:3306/javapHC?zeroDateTimeBehavior=convertToNull"/>-->
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
-      <!--<property name="javax.persistence.jdbc.password" value=""/>-->
+      <!--<property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>-->
+      <property name="javax.persistence.jdbc.password" value=""/>
       <property name="eclipselink.cache.shared.default" value="false"/>
       <property name="eclipselink.connection-pool.default.initial" value="1" />
 <property name="eclipselink.connection-pool.node2.min" value="16"/>
@@ -79,12 +79,12 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.canonicalmodel.subpackage" value="javap"/>
-     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://hc.javapsaludocupacional.com.co:3306/javap"/>
-       <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javap?autoReconnect=true"/>-->
-      <property name="javax.persistence.jdbc.user" value="dave"/>
+     <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://hc.javapsaludocupacional.com.co:3306/javap"/>-->
+       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/javap?autoReconnect=true"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <!--<property name="javax.persistence.jdbc.password" value=""/>-->
-      <property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <!--<property name="javax.persistence.jdbc.password" value="/$V$p.soig"/>-->
       <property name="eclipselink.cache.shared.default" value="false"/>
       
       <!-- Batch -->

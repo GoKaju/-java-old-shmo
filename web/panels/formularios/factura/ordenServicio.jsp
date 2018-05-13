@@ -109,7 +109,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th title="Sede de la empresa cliente ">SEDE</th>
+                            <th title="Sede de la empresa cliente ">SEDE/FINCA</th>
                             <th>N° DOCUMENTO</th>
                             <th>NOMBRES</th>
                             <th>TIPO</th>

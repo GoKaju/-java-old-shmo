@@ -110,7 +110,7 @@ session.removeAttribute("listaTiketEmpresa");
                             <td><%=clientesVO.getClieTelefonos()%></td>
                       
                             <td><button type="button" value="<%=clientesVO.getClieId()%>" data-toggle="modal" data-target=".modal-ver" class="btn-circle btn-success bottom-right btn-outline" onclick="peticionAjax('../Clientes', 'action=CargarServicios&id=' + this.value),RecargaForm('../panels/formularios/basicas/Clientes.jsp?clie_ocu=' + this.value, 'cajaModalVer', 'modalContentVer')"><i class="glyphicon glyphicon-search"></i> </button>
-                                 <%if(rf.getRofu_op().indexOf("M")!= -1){%><button type="button" value="<%=clientesVO.getClieId()%>" class="btn-circle btn-default bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio.jsp?idf=<%=idf%>&clie_ocu='+ this.value, 'panelprincipal')"><i class="glyphicon glyphicon-pencil"></i> </button><% }%>
+                                <button type="button" value="<%=clientesVO.getClieId()%>" class="btn-circle btn-default bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio.jsp?idf=<%=idf%>&clie_ocu='+ this.value, 'panelprincipal')"><i class="glyphicon glyphicon-pencil"></i> </button>
 
                         </tr>
                         <%      }

@@ -74,7 +74,7 @@
         <!-- Custom Theme JavaScript -->
         <script src="../js/sb-admin-2.js"></script>
         <script src="../js/alertify.js"></script>
-        <script src="../js/Manejador.js"></script>
+        <script src="../js/Manejador.js?<%=Math.random()%>"></script>
         <script src="../tablefilter/tablefilter.js"></script>
         <!--<script src="../js/plugins/bselect.min.js">-->
         
