@@ -2,8 +2,8 @@
 <Context antiJARLocking="true" path="/JavaP1">
       <Logger className="org.apache.catalina.logger.FileLogger" prefix="JAVAP_log." suffix=".txt" timestamp="true"/>
   <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="combined" prefix="JAVAP_access_log." resolveHosts="false" suffix=".txt"/>
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="java:comp/env" password="/$V$p.soig" type="javax.sql.DataSource" url="jdbc:mysql://javap.sytes.net:3306/javap?autoReconnect=true" username="dave"/>
-   <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Aplication" password="/$V$p.soig" type="javax.sql.DataSource" url="jdbc:mysql://javap.sytes.net:3306/javap?autoReconnect=true" username="dave"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="java:comp/env" password="/$V$p.soig" type="javax.sql.DataSource" url="jdbc:mysql://190.159.143.45:3306/javap?zeroDateTimeBehavior=convertToNull" username="dave"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Aplication" password="/$V$p.soig" type="javax.sql.DataSource" url="jdbc:mysql://190.159.143.45:3306/javap?zeroDateTimeBehavior=convertToNull" username="dave"/>
 <!--  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="java:comp/env" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/javap?autoReconnect=true" username="root"/>
    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Aplication" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/javap?autoReconnect=true" username="root"/>-->
 <!--  <ResourceLink global="java:comp/Aplication" name="jdbc/Aplication" type="javax.sql.DataSource"/>-->

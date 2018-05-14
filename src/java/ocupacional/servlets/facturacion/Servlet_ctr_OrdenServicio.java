@@ -616,7 +616,7 @@ public class Servlet_ctr_OrdenServicio extends HttpServlet {
 
                 TicketsDAO tdao = new TicketsDAO(e);
                 List<Ticket> arrayList = tdao.ListarxPaciente(doc, nombre, sede);
-                System.out.println("entre dos >" + arrayList.size());
+              
 
                 session.setAttribute("listaTicketPaciente", arrayList);
 

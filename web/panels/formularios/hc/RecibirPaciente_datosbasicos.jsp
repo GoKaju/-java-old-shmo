@@ -5,6 +5,12 @@
 --%>
 
 
+<%@page import="java.util.List"%>
+<%@page import="formularios.entidades.ResponsablesPaciente"%>
+<%@page import="javax.persistence.TypedQuery"%>
+<%@page import="javax.persistence.EntityManager"%>
+<%@page import="formularios.controlers.TipoVinculacionEpsJpaController"%>
+<%@page import="formularios.entidades.TipoVinculacionEps"%>
 <%@page import="ocupacional.JPA.controlers.SexoJpaController"%>
 <%@page import="ocupacional.JPA.valueobjects.Sexo"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -173,8 +179,6 @@
                                 <option value="B-">B-</option>
                                 <option value="AB+">AB+</option>
                                 <option value="AB-">AB-</option>
-
-
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -197,10 +201,12 @@
                         <div class="form-group col-md-4">
                             <label class="control-label" for="Vinculacion" >Vinculacion*</label>  
                             <select  name="Vinculacion" id="Vinculacion" class="form-control" required onchange="">
-                                <option value="">Seleccione..</option>
-                                <option value="COTIZANTE">COTIZANTE</option>
-                                <option value="SUBSIDIADO">SUBSIDIADO</option>
-                                <option value="REGIMEN ESPECIAL">REGIMEN ESPECIAL</option>
+                             <option value="">Seleccione..</option>
+                                <%
+                                    for (TipoVinculacionEps ec : new TipoVinculacionEpsJpaController(emf).findTipoVinculacionEpsEntities()) {%>
+                                <option value="<%=ec.getTvepDescripcion()%>"><%=pc.notEmpty(ec.getTvepDescripcion())%></option>
+                                <%}
+                                %>
 
                             </select>
                             <span class="help-block"></span>
@@ -221,7 +227,7 @@
                             </select>
                             <span class="help-block"></span>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
@@ -324,55 +330,75 @@
 
                 </fieldset>
 
+                            <%
+                            // acompañante y responsable
+                    EntityManager em = emf.createEntityManager();
+                    TypedQuery<ResponsablesPaciente> consulta = em.createNamedQuery("ResponsablesPaciente.findByTickId", ResponsablesPaciente.class);
+                    consulta.setParameter("tickId", t.getTickId());
+                    
+                        List<ResponsablesPaciente> lista = consulta.getResultList();
+                        em.close();
+                        ResponsablesPaciente responsable = new ResponsablesPaciente();
+                        ResponsablesPaciente acompanante = new ResponsablesPaciente();
+                        for (ResponsablesPaciente p : lista) {
+                            if(p.getRepaTipo().equals("RESPONSABLE")){
+                            responsable = p;
+                            }else if(p.getRepaTipo().equals("ACOMPANANTE")){
+                            acompanante = p;
+                            }
+                           
+                        }  
+                            %>
+                            
+                            
                 <fieldset>
                     <legend>Acompañante:</legend>
-                           <div class="form-group col-md-3">
-                            <label class="control-label" for="nombre_Acom">Nombre</label>  
-                            <input id="nombre_Acom" name="nombre_Acom" placeholder="" class="form-control " type="text"  value="">
-                            <span class="help-block"></span>
-                        </div>
-                               <div class="form-group col-md-3">
-                            <label class="control-label" for="parentesco_Acom">Parentesco</label>  
-                            <input id="parentesco_Acom" name="parentesco_Acom" placeholder="" class="form-control " type="text"  value="">
-                            <span class="help-block"></span>
-                        </div>
-                    
-                            <div class="form-group col-md-3">
-                            <label class="control-label" for="direccion_Acom">Lugar de Recidencia*</label>  
-                            <input id="direccion_Acom"  name="direccion_Acom" placeholder="" class="form-control" type="text" required value="<%= pc.notEmpty(paci.getPaciDireccion())%>" >
-                            <span class="help-block"></span>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label" for="telefono_Acom">Telefono</label>  
-                            <input id="telefono_Acom" name="telefono_Acom" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(paci.getPaciTelefono())%>">
-                            <span class="help-block"></span>
-                        </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="nombre_Acom">Nombre</label>  
+                        <input id="nombre_Acom" name="nombre_Acom" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(acompanante.getRepaNombre())%>">
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="parentesco_Acom">Parentesco</label>  
+                        <input id="parentesco_Acom" name="parentesco_Acom" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(acompanante.getRepaParentesco())%>">
+                        <span class="help-block"></span>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="direccion_Acom">Lugar de Recidencia</label>  
+                        <input id="direccion_Acom"  name="direccion_Acom" placeholder="" class="form-control" type="text"  value="<%= pc.notEmpty(acompanante.getRepaDireccion())%>" >
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="telefono_Acom">Telefono</label>  
+                        <input id="telefono_Acom" name="telefono_Acom" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(acompanante.getRepaTelefono())%>">
+                        <span class="help-block"></span>
+                    </div>
 
                 </fieldset>
-                    <fieldset>
+                <fieldset>
                     <legend>Responsable:</legend>
-                            <div class="form-group col-md-3">
-                            <label class="control-label" for="nombre_Resp">Nombre</label>  
-                            <input id="nombre_Resp" name="nombre_Resp" placeholder="" class="form-control " type="text"  value="">
-                            <span class="help-block"></span>
-                        </div>
-                               <div class="form-group col-md-3">
-                            <label class="control-label" for="parentesco_Resp">Parentesco</label>  
-                            <input id="parentesco_Resp" name="parentesco_Resp" placeholder="" class="form-control " type="text"  value="">
-                            <span class="help-block"></span>
-                        </div>
-                    
-                            <div class="form-group col-md-3">
-                            <label class="control-label" for="direccion_Resp">Lugar de Recidencia*</label>  
-                            <input id="direccion_Resp"  name="direccion_Resp" placeholder="" class="form-control" type="text" required value="<%= pc.notEmpty(paci.getPaciDireccion())%>" >
-                            <span class="help-block"></span>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label" for="telefono_Resp">Telefono</label>  
-                            <input id="telefono_Resp" name="telefono_Resp" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(paci.getPaciTelefono())%>">
-                            <span class="help-block"></span>
-                        </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="nombre_Resp">Nombre</label>  
+                        <input id="nombre_Resp" name="nombre_Resp" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(responsable.getRepaNombre())%>">
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="parentesco_Resp">Parentesco</label>  
+                        <input id="parentesco_Resp" name="parentesco_Resp" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(responsable.getRepaParentesco())%>">
+                        <span class="help-block"></span>
+                    </div>
 
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="direccion_Resp">Lugar de Recidencia</label>  
+                        <input id="direccion_Resp"  name="direccion_Resp" placeholder="" class="form-control" type="text"  value="<%= pc.notEmpty(responsable.getRepaDireccion())%>" >
+                        <span class="help-block"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label" for="telefono_Resp">Telefono</label>  
+                        <input id="telefono_Resp" name="telefono_Resp" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(responsable.getRepaTelefono())%>">
+                        <span class="help-block"></span>
+                    </div>
                 </fieldset>
 
                 <fieldset>
@@ -441,6 +467,7 @@
             });
     $("#arl").val('<%=pc.notEmpty(paci.getPaciArl())%>');
     $("#eps").val('<%=pc.notEmpty(paci.getPaciEps())%>');
+    $("#Vinculacion").val('<%=pc.notEmpty(paci.getPaciVinculacionEps())%>');
     $("#estadoCivil").val('<%=pc.notEmpty(paci.getPaciEcivil())%>');
     $("#rh").val('<%=pc.notEmpty(paci.getPaciRh())%>');
     $("#Genero").val('<%=pc.notEmpty(paci.getPaciGenero())%>');

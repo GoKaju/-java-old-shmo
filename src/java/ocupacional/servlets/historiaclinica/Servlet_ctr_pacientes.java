@@ -7,6 +7,7 @@ package ocupacional.servlets.historiaclinica;
 
 import formularios.controlers.AnotacionesJpaController;
 import formularios.controlers.PacientesJpaController;
+import formularios.controlers.ResponsablesPacienteJpaController;
 import formularios.controlers.RespuestasJpaController;
 import formularios.entidades.Anotaciones;
 import formularios.entidades.Campos;
@@ -14,6 +15,7 @@ import formularios.entidades.Categorias;
 import formularios.entidades.Formularios;
 import formularios.entidades.Huellafirma;
 import formularios.entidades.Pacientes;
+import formularios.entidades.ResponsablesPaciente;
 import formularios.entidades.Respuestas;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -86,6 +88,7 @@ public class Servlet_ctr_pacientes extends HttpServlet {
                     paci.setPaciEcivil(e.o.getvariable("estadoCivil"));
                     paci.setPaciRh(e.o.getvariable("rh"));
                     paci.setPaciEps(e.o.getvariable("eps"));
+                    paci.setPaciVinculacionEps(e.o.getvariable("Vinculacion"));
                     paci.setPaciArl(e.o.getvariable("arl"));
                     paci.setPaciEscolaridad(e.o.getvariable("Escolaridad"));
                     paci.setPaciDominancia(e.o.getvariable("Dominancia"));
@@ -112,6 +115,48 @@ public class Servlet_ctr_pacientes extends HttpServlet {
                            ex.printStackTrace();}
                         }
 
+                        // guardar responsables y acompañante 20180514
+                                        // acompañante y responsable
+                    TypedQuery<ResponsablesPaciente> consulta = em.createNamedQuery("ResponsablesPaciente.findByTickId", ResponsablesPaciente.class);
+                    consulta.setParameter("tickId", t.getTickId());
+                        List<ResponsablesPaciente> lista = consulta.getResultList();
+                        ResponsablesPaciente responsable = new ResponsablesPaciente();
+                        ResponsablesPaciente acompanante = new ResponsablesPaciente();
+                        for (ResponsablesPaciente p : lista) {
+                            if(p.getRepaTipo().equals("RESPONSABLE")){
+                            responsable = p;
+                            }else if(p.getRepaTipo().equals("ACOMPANANTE")){
+                            acompanante = p;
+                            }  
+                        }
+                        responsable.setPaciId(paci.getPaciId());
+                        responsable.setRepaNombre(e.o.getvariable("nombre_Resp"));
+                        responsable.setRepaParentesco(e.o.getvariable("parentesco_Resp"));
+                        responsable.setRepaDireccion(e.o.getvariable("direccion_Resp"));
+                        responsable.setRepaTelefono(e.o.getvariable("telefono_Resp"));
+                        responsable.setRepaTipo("RESPONSABLE");
+                        responsable.setTickId(t.getTickId());
+                        
+                        acompanante.setPaciId(paci.getPaciId());
+                        acompanante.setRepaNombre(e.o.getvariable("nombre_Acom"));
+                        acompanante.setRepaParentesco(e.o.getvariable("parentesco_Acom"));
+                        acompanante.setRepaDireccion(e.o.getvariable("direccion_Acom"));
+                        acompanante.setRepaTelefono(e.o.getvariable("telefono_Acom"));
+                        acompanante.setRepaTipo("ACOMPANANTE");
+                        acompanante.setTickId(t.getTickId());
+                        
+                        
+                        if(responsable.getRepaId()!= null){
+                        new ResponsablesPacienteJpaController(emf).edit(responsable);
+                        }else{
+                        new ResponsablesPacienteJpaController(emf).create(responsable);
+                        }
+                        if(acompanante.getRepaId()!= null){
+                        new ResponsablesPacienteJpaController(emf).edit(acompanante);
+                        }else{
+                            new ResponsablesPacienteJpaController(emf).create(acompanante);
+                        
+                        }
                         tDAO.edit(t);
                         session.setAttribute("Ticket", t);
                         e.getObjetoRespuestaVO().setTipooperacion("ejecutarhtml");

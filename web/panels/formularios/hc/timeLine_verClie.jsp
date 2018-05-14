@@ -3,6 +3,7 @@
     Created on : 14/07/2016, 10:00:41 PM
     Author     : D4V3
 --%>
+<%@page import="formularios.entidades.ResponsablesPaciente"%>
 <%@page import="ocupacional.JPA.controlers.CiudadesJpaController"%>
 <%@page import="java.util.List"%>
 <%@page import="javax.persistence.TypedQuery"%>
@@ -43,12 +44,12 @@
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP1PU");
             EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("JavaP");
             EntityManager em = emf.createEntityManager();
-            try{
+            try {
 
-            PacientesJpaController pacic = new PacientesJpaController(emf);
-            TicketJpaController tDAO = new TicketJpaController(emf2);
-            Ticket tick = tDAO.findTicket(Integer.parseInt(request.getParameter("id")));
-            Pacientes paci = pacic.findPacientes(tick.getTickPaciente());
+                PacientesJpaController pacic = new PacientesJpaController(emf);
+                TicketJpaController tDAO = new TicketJpaController(emf2);
+                Ticket tick = tDAO.findTicket(Integer.parseInt(request.getParameter("id")));
+                Pacientes paci = pacic.findPacientes(tick.getTickPaciente());
 %>
 
 
@@ -69,7 +70,7 @@
                         <%} else {%>
                         <img src="../images/mujer.PNG" alt="foto" />
                         <%}
-                       } else {%>
+                        } else {%>
                         <img src="<%=paci.getPaciFoto()%>" alt="foto" />
                         <%}%>
                     </div>
@@ -90,7 +91,7 @@
                                 </tr>
                                 <tr>
                                     <td>EPS: </td>
-                                    <td><%=e.o.notEmpty(new EntidadesJpaController(emf2).findEntidades(Integer.parseInt(paci.getPaciEps())).getEntiNombre())%></td>
+                                    <td><%=e.o.notEmpty(new EntidadesJpaController(emf2).findEntidades(Integer.parseInt(paci.getPaciEps())).getEntiNombre())%>-<%=e.o.notEmpty(paci.getPaciVinculacionEps())%>  </td>
                                 </tr>
                                 <tr>
                                     <td>ARL:</td>
@@ -119,8 +120,8 @@
                                 <tr>
                                     <td>Dirección: </td>
                                     <td><%=e.o.notEmpty(paci.getPaciDireccion())%><%if (paci.getCiudId() != null) {
-                                           out.print(" - " + new CiudadesJpaController(emf2).findCiudades(paci.getCiudId()).getCiudNombre() + ", " + new CiudadesJpaController(emf2).findCiudades(paci.getCiudId()).getDepaId().getDepaNombre());
-                                       }%></td>
+                                            out.print(" - " + new CiudadesJpaController(emf2).findCiudades(paci.getCiudId()).getCiudNombre() + ", " + new CiudadesJpaController(emf2).findCiudades(paci.getCiudId()).getDepaId().getDepaNombre());
+                                        }%></td>
                                 </tr>
                                 <tr>
                                     <td>Telefono:</td>
@@ -131,6 +132,36 @@
 
                         </table>   
                     </div>
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-hover table-condensed">
+                            <%
+                                // acompañante y responsable
+
+                                TypedQuery<ResponsablesPaciente> consultaresp = em.createNamedQuery("ResponsablesPaciente.findByTickId", ResponsablesPaciente.class);
+                                consultaresp.setParameter("tickId", tick.getTickId());
+
+                                List<ResponsablesPaciente> listaResp = consultaresp.getResultList();
+                                if (listaResp != null && !listaResp.isEmpty()) {
+                                    for (ResponsablesPaciente p : listaResp) {
+                            %>
+
+                            <tr>
+                                <td><%=e.o.notEmpty(p.getRepaTipo())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaNombre())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaParentesco())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaDireccion())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaTelefono())%></td>
+
+                            </tr>
+
+
+
+                            <%        }
+                                }  %>
+                        </table>
+
+                    </div>
+
 
 
                 </div>
@@ -610,7 +641,7 @@
                     <img src="../images/examen_icon.svg" style="max-width: 24px; margin-left: -12px;" alt="Picture">
                 </div> <!-- cd-timeline-img -->
                 <%
-                        } else if (new ExamenesJpaController(emf2).findExamenes(a.getFormId().getExamId()).getExamTipo().equals("LABORATORIO")) { %>
+                } else if (new ExamenesJpaController(emf2).findExamenes(a.getFormId().getExamId()).getExamTipo().equals("LABORATORIO")) { %>
                 <div class="cd-timeline-img cd-movie">
                     <img src="../images/laboratorio_icon.svg" style="max-width: 24px; margin-left: -12px;" alt="Picture">
                 </div>  
@@ -692,19 +723,16 @@
         </div>
     </div>
 </div>
-<%     }catch (Exception ex) {
-                ex.printStackTrace();
-            }finally {
-                em.close();
-            }
-    }else{%>
+<%     } catch (Exception ex) {
+        ex.printStackTrace();
+    } finally {
+        em.close();
+    }
+} else {%>
 <script type="text/javascript">
     location.href = '../logout.jsp';
 </script>
 <%}
-    }
-    catch(Exception ex
-
-    
-        ){ex.printStackTrace();
+    } catch (Exception ex) {
+        ex.printStackTrace();
     }%>

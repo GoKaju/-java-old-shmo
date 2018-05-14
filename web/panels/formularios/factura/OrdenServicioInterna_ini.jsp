@@ -36,30 +36,27 @@
 <%@page import="ocupacional.bdatos.facturacion.ClientesDAO"%>
 <%@page import="ocupacional.valueobjects.facturacion.ClientesVO"%>
 <%@page import="valeria.response.Mediador"%>
-<%   
+<%
 
-session.removeAttribute("listaTiketEmpresa");
- Mediador e = (Mediador) session.getAttribute("Mediador");
+    session.removeAttribute("listaTiketEmpresa");
+    Mediador e = (Mediador) session.getAttribute("Mediador");
     Cadenas pc = new Cadenas();
-    
-    if( e != null ){
-      
-       String idf = request.getParameter("idf");
-       if(idf!=null){
-       session.removeAttribute("idf");
-       session.setAttribute("idf", idf);
-       
-       }else{
-       idf=(String)session.getAttribute("idf");
-       
-       
-       }
-        
-       RolFuncionalidadVOs rf = new  RolFuncionalidadDAO(e).Cargar(idf);
-   
+
+    if (e != null) {
+
+        String idf = request.getParameter("idf");
+        if (idf != null) {
+            session.removeAttribute("idf");
+            session.setAttribute("idf", idf);
+
+        } else {
+            idf = (String) session.getAttribute("idf");
+
+        }
+
+        RolFuncionalidadVOs rf = new RolFuncionalidadDAO(e).Cargar(idf);
 
 
- 
 %>
 <div class="panel panel-default">
 
@@ -69,7 +66,7 @@ session.removeAttribute("listaTiketEmpresa");
                 <h2 class="text-success">Orden Servicio</h2>
             </div>
 
-   
+
         </div>
     </div>
     <div class="panel-body">
@@ -86,36 +83,34 @@ session.removeAttribute("listaTiketEmpresa");
                             <th>No. DOCUMENTO</th>
                             <th>NOMBRE</th>
                             <th>TELEFONO</th>
-                  
+
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%
-                    
-                          EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
-                    ClientesJpaController   ClientesDAO = new ClientesJpaController(emf);
-                                int cont = 1;
-                    
-                                for (Clientes clientesVO : ClientesDAO.findClientesEntities()) {
-                                   
-                                   if(!clientesVO.getClieEstado().equals("ELIMINADO")){
+                        <%                            EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaP");
+                            ClientesJpaController ClientesDAO = new ClientesJpaController(emf);
+                            int cont = 1;
+
+                            for (Clientes clientesVO : ClientesDAO.findClientesEntities()) {
+
+                                if (!clientesVO.getClieEstado().equals("ELIMINADO")) {
                         %>
                         <tr>
                             <td><%=cont++%></td>
-                            <td><%=clientesVO.getClieTipo() %></td>
-                            <td><%=clientesVO.getTidoId().getTidoDescripcion() %></td>
-                            <td><%=clientesVO.getClieDocumento()  %></td>
-                            <td><%=clientesVO.getClieNombre() %></td>
+                            <td><%=clientesVO.getClieTipo()%></td>
+                            <td><%=clientesVO.getTidoId().getTidoDescripcion()%></td>
+                            <td><%=clientesVO.getClieDocumento()%></td>
+                            <td><%=clientesVO.getClieNombre()%></td>
                             <td><%=clientesVO.getClieTelefonos()%></td>
-                      
-                            <td><button type="button" value="<%=clientesVO.getClieId()%>" data-toggle="modal" data-target=".modal-ver" class="btn-circle btn-success bottom-right btn-outline" onclick="peticionAjax('../Clientes', 'action=CargarServicios&id=' + this.value),RecargaForm('../panels/formularios/basicas/Clientes.jsp?clie_ocu=' + this.value, 'cajaModalVer', 'modalContentVer')"><i class="glyphicon glyphicon-search"></i> </button>
-                                <button type="button" value="<%=clientesVO.getClieId()%>" class="btn-circle btn-default bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio.jsp?idf=<%=idf%>&clie_ocu='+ this.value, 'panelprincipal')"><i class="glyphicon glyphicon-pencil"></i> </button>
+
+                            <td><button type="button" value="<%=clientesVO.getClieId()%>" data-toggle="modal" data-target=".modal-ver" class="btn-circle btn-success bottom-right btn-outline" onclick="peticionAjax('../Clientes', 'action=CargarServicios&id=' + this.value), RecargaForm('../panels/formularios/basicas/Clientes.jsp?clie_ocu=' + this.value, 'cajaModalVer', 'modalContentVer')"><i class="glyphicon glyphicon-search"></i> </button>
+                                <button type="button" value="<%=clientesVO.getClieId()%>" class="btn-circle btn-default bottom-right btn-outline" onclick="RecargaPanel('../panels/formularios/factura/ordenServicio.jsp?idf=<%=idf%>&clie_ocu=' + this.value, 'panelprincipal')"><i class="glyphicon glyphicon-pencil"></i> </button>
 
                         </tr>
                         <%      }
-                            
-                                }
+
+                            }
                         %>
                     </tbody>
 
@@ -159,101 +154,7 @@ session.removeAttribute("listaTiketEmpresa");
 
 </div>
 
-<!-- modal crear modifica-->
 
-<div class="modal fade modal-nuevo" tabindex="-1" role="dialog" aria-lexample-modalabelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" id="cajaModal">
-
-        <div class="modal-content" id="modalContent">
-            <form   id="Form-Data" role="form" name="Form-Data"  method="POST" action="../Clientes" autocomplete="off">
-                <div class="modal-header" >
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nuevo cliente</h4>
-                </div>
-                <div class="modal-body" id="modal_crear">
-
-                    <fieldset>
-                        <legend>Datos Basicos</legend>
-                        <div class="row col-md-12">
-                            <div class="col-md-4"> 
-
-
-                                <div class="form-group "> 
-                                    <label class=" control-label" for="tipocliente">Tipo cliente*</label> 
-                                    <select id="tipocliente" name="tipocliente" class="form-control"  onchange="td(this.value)">
-                                        <option value="J">JURIDICO</option>
-                                        <option value="N">NATURAL</option>
-                                    
-                                    </select>
-
-                                    
-                                    
-                                    <span class="help-block"></span>
-
-                                </div>                    
-                            </div>
-                            <div class="col-md-4"> 
-
-
-                                <div class="form-group "> 
-                                    <label class=" control-label" for="tido_id">Tipo doc.*</label> 
-                                    <select id="tido_id" name="tido" class="form-control" required>
-                                        <option value="">Seleccione..</option>
-                                        <%
-                                            for (TipoDocumentoVO t : new TipoDocumentoDAO(e).Listar()) {
-                                             
-                                        %>
-
-                                        <option value="<%=t.getTipo_id()%>" ><%=t.getTipo_descripcion()%></option>
-
-                                        <% }%>
-                                    </select>
-
-                                    <span class="help-block"></span>
-
-                                </div>                    
-                            </div>
-
-                                    
-                                    <script type="text/javascript">
-                                              $("#tido_id").val(6);
-                                        function td (t){
-                                       
-                                            if(t==='J'){
-                                                $("#tido_id").val(6);
-                                                
-                                            }else if (t==='N'){
-                                                
-                                                $("#tido_id").val(1);
-                                                
-                                            }
-                                            
-                                        }
-                                        
-                                        
-                                    </script>
-                            <div class="form-group col-md-4">
-
-                                <label class="control-label" for="pege_documento">No. doc.*</label>
-                                <input id="pege_documento" name="doc" placeholder="" pattern="[0-9]{5,}" class="form-control " type="text" required  " >
-                                <span class="help-block"></span>
-                            </div>
-                    
-                        </div>
-                    </fieldset>
-
-                 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#Form-Data').bootstrapValidator('resetForm', true);">Cancelar</button>
-                    <input  name="action" value="validarCliente" type="hidden">
-                    <button type="button" class="btn btn-primary" onclick="$('#Form-Data').submit()">Continuar</button>
-                </div></form> </div> 
-
-    </div>
-</div>
-
-<!-- modal  fin -->
 <!-- modal ver-->
 
 <div class="modal fade modal-ver" tabindex="-1" role="dialog" aria-lexample-modalabelledby="myLargeModalLabel">
@@ -261,8 +162,8 @@ session.removeAttribute("listaTiketEmpresa");
         <div class="modal-content" id="modalContentVer">
             <%
                 if (request.getParameter("clie_ocu") != null) {
-              
-                   Clientes clie= ClientesDAO.findClientes(Integer.parseInt(request.getParameter("clie_ocu")));
+
+                    Clientes clie = ClientesDAO.findClientes(Integer.parseInt(request.getParameter("clie_ocu")));
             %>
             <div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -275,41 +176,41 @@ session.removeAttribute("listaTiketEmpresa");
                     <div class="row well well-lg panel-title">
 
                         <div class="col-xs-6">
-                            
-                        <ul> 
-                            <li><%=pc.notEmpty(clie.getTidoId().getTidoDescripcion()+": "+clie.getClieDocumento())%>
-                            </li>
-                            <li>
-                                Razon Social/Nombre: <%=pc.notEmpty(clie.getClieNombre())%>
-                            </li>
-                        <%
-                        if(clie.getClieTipo().equals("J")){
-                        
-                        %>
-                            <li>
-                                Representante Legal: <%=pc.notEmpty(clie.getClierepLegal())%>
-                            </li>
-                          <%}%>
-                        </ul>
+
+                            <ul> 
+                                <li><%=pc.notEmpty(clie.getTidoId().getTidoDescripcion() + ": " + clie.getClieDocumento())%>
+                                </li>
+                                <li>
+                                    Razon Social/Nombre: <%=pc.notEmpty(clie.getClieNombre())%>
+                                </li>
+                                <%
+                                    if (clie.getClieTipo().equals("J")) {
+
+                                %>
+                                <li>
+                                    Representante Legal: <%=pc.notEmpty(clie.getClierepLegal())%>
+                                </li>
+                                <%}%>
+                            </ul>
                         </div>
                         <div class="col-xs-6">
-                            
-                        <ul>
-                            <li> Ciudad: <%=pc.notEmpty(clie.getCiudId().getCiudNombre())%>
-                            </li>
-                            <li>
-                                Dirección: <%=pc.notEmpty(clie.getClieDireccion())%>
-                            </li>
-                            <li>
-                                Teléfonos: <%=pc.notEmpty(clie.getClieTelefonos())%>
-                            </li>
-                        
-                            <li>
-                                Email: <%=pc.notEmpty(clie.getClieEmail())%>
-                            </li>
-                        </ul>
+
+                            <ul>
+                                <li> Ciudad: <%=pc.notEmpty(clie.getCiudId().getCiudNombre())%>
+                                </li>
+                                <li>
+                                    Dirección: <%=pc.notEmpty(clie.getClieDireccion())%>
+                                </li>
+                                <li>
+                                    Teléfonos: <%=pc.notEmpty(clie.getClieTelefonos())%>
+                                </li>
+
+                                <li>
+                                    Email: <%=pc.notEmpty(clie.getClieEmail())%>
+                                </li>
+                            </ul>
                         </div>
-                        
+
 
                     </div>
 
@@ -317,28 +218,29 @@ session.removeAttribute("listaTiketEmpresa");
                 <fieldset>
                     <legend>Servicios Permitidos</legend>
                     <div class="row well-lg">
-                                          
-                                <table id="tablaFormServicios" class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Servicio</th>
-                                            <th>Precio(COP)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%
-                                            for (ClientesServicio c : clie.getClientesServicioList()) {
-                                                                               if(c.getClseEstado().equals("ACTIVO")){ 
 
-                                                %>
-                                        <tr>
-                                            <td><%=c.getServId().getServNombre() %></td>                                            
-                                            <td>$<%=pc.getNumber(c.getClseValor())%></td>                                            
+                        <table id="tablaFormServicios" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Precio(COP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    for (ClientesServicio c : clie.getClientesServicioList()) {
+                                        if (c.getClseEstado().equals("ACTIVO")) {
 
-                                    </tr>
-                                    <% }}%>
-                                    </tbody>
-                                </table>
+                                %>
+                                <tr>
+                                    <td><%=c.getServId().getServNombre()%></td>                                            
+                                    <td>$<%=pc.getNumber(c.getClseValor())%></td>                                            
+
+                                </tr>
+                                <% }
+                                        }%>
+                            </tbody>
+                        </table>
 
 
 
@@ -346,7 +248,7 @@ session.removeAttribute("listaTiketEmpresa");
 
                     </div>
                 </fieldset>
-                                  
+
             </div>
 
 
@@ -396,8 +298,8 @@ session.removeAttribute("listaTiketEmpresa");
 
 
 </script>
-<%}else{%>
+<%} else {%>
 <script type="text/javascript">
-    location.href='../logout.jsp';
+    location.href = '../logout.jsp';
 </script>
 <%}%>

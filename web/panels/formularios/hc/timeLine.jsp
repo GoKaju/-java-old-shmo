@@ -3,6 +3,7 @@
     Created on : 14/07/2016, 10:00:41 PM
     Author     : D4V3
 --%>
+<%@page import="formularios.entidades.ResponsablesPaciente"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.Catch"%>
 <%@page import="formularios.controlers.AnotacionesJpaController"%>
@@ -96,7 +97,7 @@
                                 </tr>
                                 <tr>
                                     <td>EPS: </td>
-                                    <td><%=e.o.notEmpty(new EntidadesJpaController(emf2).findEntidades(Integer.parseInt(paci.getPaciEps())).getEntiNombre())%></td>
+                                    <td><%=e.o.notEmpty(new EntidadesJpaController(emf2).findEntidades(Integer.parseInt(paci.getPaciEps())).getEntiNombre())%>-<%=e.o.notEmpty(paci.getPaciVinculacionEps())%>  </td>
                                 </tr>
                                 <tr>
                                     <td>ARL:</td>
@@ -136,6 +137,36 @@
                             </tbody>
 
                         </table>   
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-hover table-condensed">
+                            <%
+                                // acompañante y responsable
+
+                                TypedQuery<ResponsablesPaciente> consultaresp = em.createNamedQuery("ResponsablesPaciente.findByTickId", ResponsablesPaciente.class);
+                                consultaresp.setParameter("tickId", tick.getTickId());
+
+                                List<ResponsablesPaciente> listaResp = consultaresp.getResultList();
+                                if (listaResp != null && !listaResp.isEmpty()) {
+                                    for (ResponsablesPaciente p : listaResp) {
+                            %>
+
+                            <tr>
+                                <td><%=e.o.notEmpty(p.getRepaTipo())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaNombre())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaParentesco())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaDireccion())%></td>
+                                <td><%=e.o.notEmpty(p.getRepaTelefono())%></td>
+
+                            </tr>
+
+
+
+                            <%        }
+                                }  %>
+                        </table>
+
                     </div>
 
 
@@ -706,7 +737,7 @@
                                     consultaxtcls.setParameter("formId", form);
 
                                     List<Anotaciones> lista = consultaxtcls.getResultList();
-                                  
+
                                     if (!lista.isEmpty()) {
                                         if (lista.size() > 1) {
                                             lista = this.limpiarBloqueados(lista);
@@ -743,7 +774,7 @@
                                     consultaxtcls.setParameter("ticsId", tcl.getTicsId());
                                     consultaxtcls.setParameter("formId", form);
                                     List<Anotaciones> lista = consultaxtcls.getResultList();
-                                    
+
                                     if (!lista.isEmpty()) {
                                         if (lista.size() > 1) {
                                             lista = this.limpiarBloqueados(lista);
@@ -787,7 +818,7 @@
                                     consultaxtcls.setParameter("ticsId", tcl.getTicsId());
                                     consultaxtcls.setParameter("formId", form);
                                     List<Anotaciones> lista = consultaxtcls.getResultList();
-                                   
+
                                     if (!lista.isEmpty()) {
                                         if (lista.size() > 1) {
                                             lista = this.limpiarBloqueados(lista);

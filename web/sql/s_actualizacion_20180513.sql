@@ -1,5 +1,19 @@
 
 
+/* JSP an classes
+
+-->recibirPaciente_datosbasicos.jsp
+-->Servlet_ctr_pacientes
+-->Servlet_ctr_Ordenservicio
+-->responsablePacientes
+-->tipovinculacioneps
+-->percistencexml
+-->ordenServicioInterna_ini
+-->
+1073324483
+1072497092
+*/
+
 
 ALTER TABLE `pacientes` ADD `paci_vinculacion_eps` VARCHAR(100) NULL DEFAULT NULL COMMENT 'tipo de vinculacion a la eps' AFTER `paci_eps`;
 CREATE TABLE `javaphc`.`responsables_paciente` ( `repa_id` INT(30) NOT NULL AUTO_INCREMENT , `repa_nombre` VARCHAR(100) NULL , `repa_documento` VARCHAR(20) NULL , `repa_parentesco` VARCHAR(20) NULL , `repa_direccion` VARCHAR(50) NULL , `repa_telefono` VARCHAR(50) NULL , `repa_tipo` VARCHAR(20) NULL , `tick_id` INT(30) NOT NULL , PRIMARY KEY (`repa_id`)) ENGINE = InnoDB;
