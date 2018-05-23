@@ -29,14 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ResponsablesPaciente.findAll", query = "SELECT r FROM ResponsablesPaciente r")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaId", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaId = :repaId")
-    , @NamedQuery(name = "ResponsablesPaciente.findByPaciId", query = "SELECT r FROM ResponsablesPaciente r WHERE r.paciId = :paciId")
+    , @NamedQuery(name = "ResponsablesPaciente.findByPaciId", query = "SELECT  r FROM ResponsablesPaciente r WHERE r.paciId = :paciId order by r.repaId desc ")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaNombre", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaNombre = :repaNombre")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaDocumento", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaDocumento = :repaDocumento")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaParentesco", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaParentesco = :repaParentesco")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaDireccion", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaDireccion = :repaDireccion")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaTelefono", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaTelefono = :repaTelefono")
     , @NamedQuery(name = "ResponsablesPaciente.findByRepaTipo", query = "SELECT r FROM ResponsablesPaciente r WHERE r.repaTipo = :repaTipo")
-    , @NamedQuery(name = "ResponsablesPaciente.findByTickId", query = "SELECT r FROM ResponsablesPaciente r WHERE r.tickId = :tickId")})
+    , @NamedQuery(name = "ResponsablesPaciente.findByTickId", query = "SELECT r FROM ResponsablesPaciente r WHERE r.tickId = :tickId  order by r.repaId desc")})
 public class ResponsablesPaciente implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -137,7 +137,7 @@
                                 TypedQuery<ResponsablesPaciente> consultaresp = em.createNamedQuery("ResponsablesPaciente.findByPaciId", ResponsablesPaciente.class);
                                 consultaresp.setParameter("paciId", paci.getPaciId());
 
-                                List<ResponsablesPaciente> listaResp = consultaresp.getResultList();
+                                List<ResponsablesPaciente> listaResp = consultaresp.setMaxResults(2).getResultList();
                                 if (listaResp != null && !listaResp.isEmpty()) {
                                     for (ResponsablesPaciente p : listaResp) {
                             %>

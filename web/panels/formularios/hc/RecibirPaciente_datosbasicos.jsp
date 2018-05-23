@@ -316,7 +316,7 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label class="control-label" for="pege_direccion">Lugar de Recidencia*</label>  
+                            <label class="control-label" for="pege_direccion">Lugar de Residencia*</label>  
                             <input id="pege_direccion"  name="pege_direccion" placeholder="" class="form-control" type="text" required value="<%= pc.notEmpty(paci.getPaciDireccion())%>" >
                             <span class="help-block"></span>
                         </div>
@@ -336,7 +336,7 @@
                     TypedQuery<ResponsablesPaciente> consulta = em.createNamedQuery("ResponsablesPaciente.findByTickId", ResponsablesPaciente.class);
                     consulta.setParameter("tickId", t.getTickId());
                     
-                        List<ResponsablesPaciente> lista = consulta.getResultList();
+                        List<ResponsablesPaciente> lista = consulta.setMaxResults(2).getResultList();
                         em.close();
                         ResponsablesPaciente responsable = new ResponsablesPaciente();
                         ResponsablesPaciente acompanante = new ResponsablesPaciente();
@@ -355,7 +355,7 @@
                     <legend>Acompañante:</legend>
                     <div class="form-group col-md-3">
                         <label class="control-label" for="nombre_Acom">Nombre</label>  
-                        <input id="nombre_Acom" name="nombre_Acom" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(acompanante.getRepaNombre())%>">
+                        <input id="nombre_Acom" name="nombre_Acom" placeholder="" class="form-control " type="text"  value="<%=pc.notEmpty(acompanante.getRepaNombre()).isEmpty()?"No refiere":pc.notEmpty(acompanante.getRepaNombre()) %>">
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -365,7 +365,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label class="control-label" for="direccion_Acom">Lugar de Recidencia</label>  
+                        <label class="control-label" for="direccion_Acom">Lugar de Residencia</label>  
                         <input id="direccion_Acom"  name="direccion_Acom" placeholder="" class="form-control" type="text"  value="<%= pc.notEmpty(acompanante.getRepaDireccion())%>" >
                         <span class="help-block"></span>
                     </div>
@@ -380,7 +380,7 @@
                     <legend>Responsable:</legend>
                     <div class="form-group col-md-3">
                         <label class="control-label" for="nombre_Resp">Nombre</label>  
-                        <input id="nombre_Resp" name="nombre_Resp" placeholder="" class="form-control " type="text"  value="<%= pc.notEmpty(responsable.getRepaNombre())%>">
+                        <input id="nombre_Resp" name="nombre_Resp" placeholder="" class="form-control " type="text"  value="<%=pc.notEmpty(responsable.getRepaNombre()).isEmpty()?"No refiere":pc.notEmpty(responsable.getRepaNombre())%>">
                         <span class="help-block"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -390,7 +390,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label class="control-label" for="direccion_Resp">Lugar de Recidencia</label>  
+                        <label class="control-label" for="direccion_Resp">Lugar de Residencia</label>  
                         <input id="direccion_Resp"  name="direccion_Resp" placeholder="" class="form-control" type="text"  value="<%= pc.notEmpty(responsable.getRepaDireccion())%>" >
                         <span class="help-block"></span>
                     </div>
@@ -416,12 +416,7 @@
 
 
                 </fieldset>
-                <script type="text/javascript">
-
-
-                </script>
-
-
+          
 
                 <% }%>
             </div>   
